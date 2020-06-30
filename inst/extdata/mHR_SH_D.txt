@@ -1,0 +1,10 @@
+id description
+A "INPH-b.i.d."
+B "IDet-b.i.d."
+C "IGla-300-q.d."
+D "IDeg-q.d."
+E "IGla-100-q.d."
+F "IDet-q.d./b.i.d."
+G "IDet-q.d."
+H "INPH-q.d."
+I "INPH-q.d./b.i.d." 
