@@ -6,8 +6,8 @@
 \usage{
 model_netmeta(
   long.data,
-  treatment,
   id.treatments,
+  treatment,
   reference,
   outcome = c("MD", "HR", "RR")
 )
@@ -15,9 +15,9 @@ model_netmeta(
 \arguments{
 \item{long.data}{data.frame to be analyzed should be formatted in long format}
 
-\item{treatment}{treatment names or labels}
-
 \item{id.treatments}{data.frame to specify the id and treatments}
+
+\item{treatment}{treatment names or labels}
 
 \item{reference}{the referential id in the net-meta}
 
@@ -27,8 +27,8 @@ model_netmeta(
 Summary list of the results
 }
 \description{
-This function is the warpper of mtc.network, mtc.model, mtc.run, and relative.effect from gemtc package. \cr
-R packgae gemtc and rjags are required.
+This function is the warpper of netmeta and pairwise functions from netmeta package. \cr
+R packgae netmeta is required.
 }
 \examples{
 LDT1 <- read.csv(system.file("extdata", "mHR_SH_D.csv", package = "net.meta"))

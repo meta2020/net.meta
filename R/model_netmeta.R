@@ -6,7 +6,6 @@
 #' @return Summary list of the results
 #'
 #' @importFrom netmeta pairwise netmeta
-#' @import netmeta
 #'
 #' @param long.data data.frame to be analyzed should be formatted in long format
 #' @param id.treatments data.frame to specify the id and treatments

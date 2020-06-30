@@ -1,18 +1,23 @@
-#' This function plots the network graph with SUCRA
+#' To plot the network graph with SUCRA.
 #'
-#' @title Bayesian net-meta model for MD, HR, and RR
+#' @title Network and SUCRA plots
 #'
-#' @return Summary list of the results
+#' @return a ggplot object
 #'
-#' @importFrom gemtc mtc.model mtc.network mtc.run relative.effect
+#' @importFrom netmeta netgraph
+#' @importFrom ggplot2 ggplot aes geom_vline geom_point ggtitle ylim xlim ylab xlab theme element_text element_blank
+#' @importFrom ggthemes theme_tufte
+#' @importFrom ggrepel geom_text_repel
+#' @importFrom cowplot plot_grid
 #'
-#' @param long.data data.frame to be analyzed should be formatted in long format
-#' @param id.treatments data.frame to specify the id and treatments
-#' @param reference the referential id in the net-meta
-#' @param outcome the outcome should be MD-mean difference, HR-hazard ratio, and RR-risk ratio
-#' @param mtc.n.adapt the number of adaptation (or tuning, burn-in) iterations, default is 5000; means to discard 1-5000 of the interations
-#' @param mtc.n.iter the number of simulation iteration, default is 10000; means to perform 10000 simulations
-#' @param mtc.thin default is 20, means to extract 20th value; details in mtc.run from gemtc package
+#' @param nmt results from model_netmeta function
+#' @param sucra sucra results from SUCRA function
+#' @param scl additional space added outside of edges in the net graph
+#' @param ofs distance between edges in the net graph
+#' @param lab an optional vector with treatment labels in the net graph
+#' @param font.size font size
+#' @param pos a [0, 1] specifying the position of the number of studies on the lines connecting treatments (edges)
+#' @param labels label of the whole plots
 #'
 #' @export
 #' @examples
@@ -31,23 +36,38 @@
 #' mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
 #'
 #' # View(bmt1)
-#
-## load pkgs
-library(cowplot)
-library(ggplot2)
-library(ggrepel)
-library(ggthemes)
-library(netmeta)
+#'
+#' sucra1 <-SUCRA(bmt1)
+#'
+#' trt1$label <- paste0(trt1$id,"-", trt1$description)
+#' LDT1$label <- factor(LDT1$treatment, labels = trt1$label)
+#'
+#'
+#' nmt1 <- model_netmeta(long.data = LDT1,
+#'                       treatment=LDT1$treatment,
+#'                       id.treatments = trt1,
+#'                       reference = "A",
+#'                       outcome = "HR")
+#'
+#' # View(nmt1)
+#'
+#' net_score_plot(
+#' nmt1, sucra1,
+#' lab=trt1$description,
+#' scl=1.1,ofs =0,
+#' font.size = 0.3, pos=0.5,
+#' labels="")
+#'
 
 net_score_plot <- function(
   nmt,
   sucra,
   scl=1,
   ofs=0.05,
-  lab=trt$description,
+  lab,
   font.size,
   pos = 0.5,
-  labels){
+  labels=""){
 
 op <- par(family = "sans")
 netgraph(
