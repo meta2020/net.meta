@@ -2,7 +2,7 @@ id description
 A "AA"
 B "BB"
 C "CC"
-D "DD
+D "DD"
 E "EE"
 F "FF"
 G "GG"
