@@ -12,13 +12,23 @@ Imports:
     gemtc,
     rjags,
     netmeta,
+    meta,
     cowplot,
     ggplot2,
     ggrepel,
-    ggthemes
+    ggthemes,
+    gridExtra,
+    plyr,
+    igraph,
+    reshape2,
+    magic
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
 URL: https://github.com/meta2020/net.meta
 BugReports: https://github.com/meta2020/net.meta/issues
+Suggests: 
+    devtools,
+    usethis,
+    stargazer

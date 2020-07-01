@@ -17,8 +17,8 @@
 #'
 #' @export
 #' @examples
-#' LDT1 <- read.csv(system.file("extdata", "mHR_SH_D.csv", package = "net.meta"))
-#' trt1 <- read.table(system.file("extdata", "mHR_SH_D.txt", package = "net.meta"),
+#' LDT1 <- read.csv(system.file("extdata", "HR_SH_D.csv", package = "net.meta"))
+#' trt1 <- read.table(system.file("extdata", "HR_SH_D.txt", package = "net.meta"),
 #'     header=TRUE,quote = '"', stringsAsFactors=FALSE)
 #'
 #' trt1$description <- factor(trt1$description, trt1$description)
