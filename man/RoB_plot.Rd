@@ -4,7 +4,12 @@
 \alias{RoB_plot}
 \title{Risk of bias bar plot}
 \usage{
-RoB_plot(study.CM, rob.ind, lab.size)
+RoB_plot(
+  study.CM,
+  rob.ind,
+  lab.size,
+  font.family = c("Helvetica", "Times New Roman")
+)
 }
 \arguments{
 \item{study.CM}{contribution matrix}
@@ -12,6 +17,8 @@ RoB_plot(study.CM, rob.ind, lab.size)
 \item{rob.ind}{risk of bias or indirectness}
 
 \item{lab.size}{label size}
+
+\item{font.family}{"Helvetica" or "Times New Roman"}
 }
 \value{
 ggplot object

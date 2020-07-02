@@ -11,8 +11,13 @@ net_score_plot(
   ofs = 0.05,
   lab,
   font.size,
+  title.size,
+  sucra.text.size,
   pos = 0.5,
-  labels = ""
+  labels = "",
+  font.family = c("Helvetica", "Times New Roman"),
+  net.scale = 1.1,
+  plot.scale = 0.7
 )
 }
 \arguments{
@@ -28,9 +33,19 @@ net_score_plot(
 
 \item{font.size}{font size}
 
+\item{title.size}{sucra title size}
+
+\item{sucra.text.size}{sucra text size}
+
 \item{pos}{a [0, 1] specifying the position of the number of studies on the lines connecting treatments (edges)}
 
 \item{labels}{label of the whole plots}
+
+\item{font.family}{"Helvetica" or "Times New Roman"}
+
+\item{net.scale}{the scaled size of the net plot}
+
+\item{plot.scale}{the scaled size of the sucra plot}
 }
 \value{
 a ggplot object
@@ -73,7 +88,11 @@ p<- net_score_plot(
 nmt1, sucra1,
 lab=trt1$description,
 scl=1.1,ofs =0,
-font.size = 0.3, pos=0.5,
+font.size = 1,
+pos=0.5,
+title.size=10,
+sucra.text.size=4,
+font.family="Helvetica",
 labels="")
 
 }

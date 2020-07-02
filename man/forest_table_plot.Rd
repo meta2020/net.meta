@@ -5,35 +5,47 @@
 \title{Forest-table plot of net-meta model for MD, HR, and RR}
 \usage{
 forest_table_plot(
+  type = c("bayesian", "all"),
   bmt,
   nmt = NULL,
-  x.lab,
-  title.size = 15,
-  font.size = 5,
+  digits = 2,
   x1,
   x2,
-  digits = 2,
-  type = c("bayesian", "all")
+  x.lab,
+  title.size,
+  text.size,
+  point.size = 5,
+  labels = NULL,
+  plot.scale = 0.9,
+  font.family = c("Helvetica", "Times New Roman")
 )
 }
 \arguments{
+\item{type}{the type of plots, bayesian-bayesian result; all-bayesian, freq, and prediction interval}
+
 \item{bmt}{bayesian net-meta result from model_gemtc}
 
 \item{nmt}{frequentist net-meta result from model_nemeta}
 
-\item{x.lab}{label in the x-axis}
-
-\item{title.size}{title size}
-
-\item{font.size}{font size}
+\item{digits}{digits of the results}
 
 \item{x1}{the left xlim}
 
 \item{x2}{the right xlim}
 
-\item{digits}{digits of the results}
+\item{x.lab}{label in the x-axis}
 
-\item{type}{the type of plots, bayesian-bayesian result; all-bayesian, freq, and prediction interval}
+\item{title.size}{title size}
+
+\item{text.size}{font size}
+
+\item{point.size}{point size}
+
+\item{labels}{label of the whole plot}
+
+\item{plot.scale}{the scaled size of the whole plot}
+
+\item{font.family}{"Helvetica" or "Times New Roman"}
 }
 \value{
 ggplot object
@@ -58,14 +70,15 @@ outcome="HR",
 mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
 
 p<-forest_table_plot(
+type="bayesian",
 bmt=bmt1,
-x.lab = "X",
+x.lab = "X caption",
 x1=0,
 x2=40,
-title.size =15,
-font.size =5,
+title.size =12,
+text.size =4,
 digits = 2,
-type="bayesian")
+font.family="Helvetica")
 
 nmt1 <- model_netmeta(long.data = LDT1,
                       treatment=LDT1$treatment,
@@ -76,14 +89,15 @@ nmt1 <- model_netmeta(long.data = LDT1,
 # View(nmt1)
 
 p<-forest_table_plot(
+type="all",
 bmt=bmt1,
 nmt=nmt1,
-x.lab = "X",
+x.lab = "X caption",
 x1=0,
 x2=50,
-title.size =15,
-font.size =5,
+title.size =12,
+text.size =4,
 digits = 2,
-type="all")
+font.family="Times New Roman")
 
 }

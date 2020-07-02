@@ -4,7 +4,16 @@
 \alias{funnel_plot}
 \title{Funnel plot from frequentist net-meta}
 \usage{
-funnel_plot(nmt, font.size, text.size, text.x, cap, x1, x2)
+funnel_plot(
+  nmt,
+  font.size,
+  text.size,
+  text.x.position,
+  cap,
+  x1,
+  x2,
+  font.family = c("Helvetica", "Times New Roman")
+)
 }
 \arguments{
 \item{nmt}{results from model_netmeta function}
@@ -13,16 +22,18 @@ funnel_plot(nmt, font.size, text.size, text.x, cap, x1, x2)
 
 \item{text.size}{text size}
 
-\item{text.x}{text position}
+\item{text.x.position}{text position}
 
 \item{cap}{caption}
 
 \item{x1}{left xlim}
 
 \item{x2}{right xlim}
+
+\item{font.family}{"Helvetica" or "Times New Roman"}
 }
 \value{
-a ggplot object
+plot and ggplot objects
 }
 \description{
 To plot the funnel plot from frequentist net-meta
@@ -52,9 +63,11 @@ p<-funnel_plot(
   nmt.lab1,
   font.size=10,
   text.size=4,
-  text.x=0,
+  text.x.position=0,
   x1=-1,
   x2=3,
-  cap="HR")
+  cap="HR",
+  font.family = "Times New Roman"
+  )
 
 }

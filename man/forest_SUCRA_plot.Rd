@@ -6,24 +6,27 @@
 \usage{
 forest_SUCRA_plot(
   bmt,
+  sucra,
   x.lab,
-  title.size = 15,
-  font.size = 5,
   x1,
   x2,
-  digits = 2,
-  sucra,
-  labels
+  digits,
+  point.size = 4,
+  point.shape = 23,
+  title.size,
+  table.text.size,
+  sucra.text.size,
+  labels = NULL,
+  font.family = c("Helvetica", "Times New Roman"),
+  plot.scale = 0.9
 )
 }
 \arguments{
 \item{bmt}{bayesian net-meta result from model_gemtc}
 
+\item{sucra}{SUCRA values}
+
 \item{x.lab}{label in the x-axis}
-
-\item{title.size}{title size}
-
-\item{font.size}{font size}
 
 \item{x1}{the left xlim}
 
@@ -31,9 +34,21 @@ forest_SUCRA_plot(
 
 \item{digits}{digits of the results}
 
-\item{sucra}{SUCRA values}
+\item{point.size}{point size}
 
-\item{labels}{label of the whole plot}
+\item{point.shape}{point shape see: \url{http://www.sthda.com/english/wiki/ggplot2-point-shapes}}
+
+\item{title.size}{title font size}
+
+\item{table.text.size}{table text size}
+
+\item{sucra.text.size}{sucra text size}
+
+\item{labels}{label od the whole plot}
+
+\item{font.family}{"Helvetica" or "Times New Roman"}
+
+\item{plot.scale}{the scaled size of the whole plot}
 }
 \value{
 ggplot object
@@ -60,13 +75,17 @@ sucra<-SUCRA(bmt1)
 
 p <- forest_SUCRA_plot(
 bmt=bmt1,
+sucra=sucra,
 x.lab="X caption",
-title.size =15,
-font.size =5,
 x1=0,
 x2=40,
 digits = 2,
-sucra=sucra,
-labels="Title")
+title.size =12,
+table.text.size=4,
+sucra.text.size=4,
+labels="Title",
+font.family = "Times New Roman",
+plot.scale=0.9
+)
 
 }

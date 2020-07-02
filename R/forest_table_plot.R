@@ -10,15 +10,19 @@
 #' @importFrom gridExtra grid.arrange
 #' @importFrom plyr desc
 #'
+#' @param type the type of plots, bayesian-bayesian result; all-bayesian, freq, and prediction interval
 #' @param bmt bayesian net-meta result from model_gemtc
 #' @param nmt frequentist net-meta result from model_nemeta
-#' @param x.lab label in the x-axis
-#' @param title.size title size
-#' @param font.size font size
+#' @param digits digits of the results
 #' @param x1 the left xlim
 #' @param x2 the right xlim
-#' @param digits digits of the results
-#' @param type the type of plots, bayesian-bayesian result; all-bayesian, freq, and prediction interval
+#' @param x.lab label in the x-axis
+#' @param title.size title size
+#' @param text.size font size
+#' @param point.size point size
+#' @param labels label of the whole plot
+#' @param font.family "Helvetica" or "Times New Roman"
+#' @param plot.scale the scaled size of the whole plot
 #'
 #' @export
 #' @examples
@@ -37,14 +41,15 @@
 #' mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
 #'
 #' p<-forest_table_plot(
+#' type="bayesian",
 #' bmt=bmt1,
-#' x.lab = "X",
+#' x.lab = "X caption",
 #' x1=0,
 #' x2=40,
-#' title.size =15,
-#' font.size =5,
+#' title.size =12,
+#' text.size =4,
 #' digits = 2,
-#' type="bayesian")
+#' font.family="Helvetica")
 #'
 #' nmt1 <- model_netmeta(long.data = LDT1,
 #'                       treatment=LDT1$treatment,
@@ -55,27 +60,32 @@
 #' # View(nmt1)
 #'
 #' p<-forest_table_plot(
+#' type="all",
 #' bmt=bmt1,
 #' nmt=nmt1,
-#' x.lab = "X",
+#' x.lab = "X caption",
 #' x1=0,
 #' x2=50,
-#' title.size =15,
-#' font.size =5,
+#' title.size =12,
+#' text.size =4,
 #' digits = 2,
-#' type="all")
+#' font.family="Times New Roman")
 #'
 
 forest_table_plot <- function(
+  type=c("bayesian", "all"),
   bmt,
   nmt=NULL,
-  x.lab,
-  title.size =15,
-  font.size =5,
+  digits = 2,
   x1,
   x2,
-  digits = 2,
-  type=c("bayesian", "all")
+  x.lab,
+  title.size,
+  text.size,
+  point.size=5,
+  labels=NULL,
+  plot.scale=0.9,
+  font.family = c("Helvetica", "Times New Roman")
   ) {
 
   type <- match.arg(type)
@@ -122,19 +132,20 @@ plot <- ggplot(df,
   geom_vline(xintercept = vline, linetype="dashed",size=0.5, alpha=0.5)+
   geom_errorbarh(aes(xmin=low, xmax=up), height=.2) +
   geom_point(aes(x=mean),
-    shape=23,size=5,
+    shape=23,size=point.size,
     fill="midnightblue", color="midnightblue") +
   ggtitle(paste0("Compared with ", bmt$ref.treatment$description)) + #"Compared with iNPH(bid)"
   ylab(NULL) +
   xlab(x.lab) +
   xlim(x1,x2)+
   theme_tufte()+
-  theme(text = element_text(size = title.size,family = "Helvetica")) #20
+  theme(text = element_text(size=title.size, family = font.family),
+        plot.title = element_text(hjust = 0, size=title.size, family = font.family)) #20
 
 
 tab_base <- ggplot(df, aes(y = reorder(label, desc(label)))) +
   ylab(NULL) + xlab("  ") +
-  theme(plot.title = element_text(hjust = 0.5, size=title.size, family = "Helvetica"), ## centering title on text
+  theme(plot.title = element_text(hjust = 0.5, size=title.size, family = font.family), ## centering title on text
         axis.text.x=element_text(color="white"), ## need text to be printed so it stays aligned with figure but white so it's invisible
         axis.line=element_blank(),
         axis.text.y=element_blank(),
@@ -146,19 +157,25 @@ tab_base <- ggplot(df, aes(y = reorder(label, desc(label)))) +
         panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
         plot.background=element_blank(),
-        text = element_text(size = 14,family = "Helvetica"))
+        text = element_text(size = 14,family = font.family))
 
 tab <- tab_base +
   geom_text(aes(x=1,
     label=paste0(round(mean,digits), " (",round(low, digits),", ",round(up,digits),")")),
-    family="Helvetica", size=font.size) + #6
+    family=font.family, size=text.size) + #6
   ggtitle(tab.title) #"Mean Difference (95% CrI)"
 
 
-lay <-  matrix(c(1,1,2), nrow=1)
-p<-grid.arrange(plot, tab, layout_matrix=lay)
 
-p
+plot_grid(plot, tab,
+             labels = labels,
+             align="h",
+             nrow = 1,
+             rel_widths = c(1.5, 1),
+             #rel_heights = 1,
+             scale = c(plot.scale,plot.scale),
+             label_fontfamily = font.family)
+
   }
 
   else{
@@ -228,16 +245,17 @@ p
 
     ## plot
     ## forest plot
-    plot <- ggplot(df, aes(x=df$point_est, y=df$label)) +
+    plot <- ggplot(df, aes(x=point_est, y=label)) +
       geom_vline(xintercept = vline, linetype="dashed",size=0.5, alpha=0.5)+
       geom_errorbarh(aes(xmin=low, xmax=up), height=.2) +
-      geom_point(aes(x=mean),shape=24,size=5, fill="midnightblue",color="midnightblue", alpha=0.5) +
+      geom_point(aes(x=mean),shape=24,size=point.size, fill="midnightblue",color="midnightblue", alpha=0.5) +
       ggtitle(paste0("Compared with ", bmt$ref.treatment$description))+
       ylab(NULL) +
       xlab(x.lab) +
       xlim(x1,x2)+
       theme_tufte()+
-      theme(text = element_text(size = title.size,family = "Helvetica"))+
+      theme(text = element_text(size = title.size,family = font.family),
+            plot.title = element_text(hjust = 0, size=title.size, family = font.family))+
       geom_errorbarh(aes(xmin=low3, xmax=up3), height=.2, color="blue") +
       geom_errorbarh(aes(xmin=low2, xmax=up2), height=.2, color="red") +
       geom_point(aes(x=mean2),shape=25,size=5, fill="red",color="red", alpha=0.5)
@@ -245,7 +263,7 @@ p
     ## table
     tab_base <- ggplot(df, aes(y=label)) +
       ylab(NULL) + xlab("  ") +
-      theme(plot.title = element_text(hjust = 0.5, size=title.size, family = "Helvetica"), ## centering title on text
+      theme(plot.title = element_text(hjust = 0.5, size=title.size, family = font.family), ## centering title on text
             axis.text.x=element_text(color="white"), ## need text to be printed so it stays aligned with figure but white so it's invisible
             axis.line=element_blank(),
             axis.text.y=element_blank(),axis.ticks=element_blank(),
@@ -256,26 +274,35 @@ p
     tab <- tab_base +
       geom_text(aes(x=1,
                     label=paste0(round(mean,digits), " (",round(low, digits),",",round(up,digits),")")),
-                family="Helvetica",
-                size=font.size) +
+                family=font.family,
+                size=text.size) +
       ggtitle(paste0(tab.title1, " (95% CrI)"))
 
     tab2 <- tab_base +
       geom_text(aes(x=1,
                     label=paste0(round(mean2,digits), " (",round(low2, digits),",",round(up2,digits),")")),
-                family="Helvetica", size=font.size, color="red") +
+                family=font.family,
+                size=text.size, color="red") +
       ggtitle(paste0(tab.title2, " (95% CI)"))
 
     tab3 <- tab_base +
       geom_text(aes(x=1,
                     label=paste0(" (",round(low3, digits),",",round(up3,digits),")")),
-                family="Helvetica", size=font.size, color="blue") +
+                family=font.family, size=text.size, color="blue") +
       ggtitle("(95% PI)")
 
-    lay <-  matrix(c(1,1,1,2,3,4), nrow=1)
-    p<-grid.arrange(plot, tab,tab2,tab3, layout_matrix=lay)
+    #lay <-  matrix(c(1,1,1,2,3,4), nrow=1)
+    #p<-grid.arrange(plot, tab,tab2,tab3, layout_matrix=lay)
+    plot_grid(plot, tab, tab2, tab3,
+              labels = labels,
+              align="h",
+              nrow = 1,
+              rel_widths = c(1.5, 1,1,1),
+              #rel_heights = 1,
+              scale = rep(plot.scale,4),
+              label_fontfamily = font.family)
 
-    p
+
   }
 
 }

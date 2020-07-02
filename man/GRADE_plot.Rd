@@ -4,7 +4,12 @@
 \alias{GRADE_plot}
 \title{GRADE plot}
 \usage{
-GRADE_plot(RESULT, font.size, lab.size)
+GRADE_plot(
+  RESULT,
+  font.size,
+  lab.size,
+  font.family = c("Helvetica", "Times New Roman")
+)
 }
 \arguments{
 \item{RESULT}{GRADE matrix result}
@@ -12,6 +17,8 @@ GRADE_plot(RESULT, font.size, lab.size)
 \item{font.size}{font size}
 
 \item{lab.size}{label size}
+
+\item{font.family}{"Helvetica" or "Times New Roman"}
 }
 \value{
 ggplot object

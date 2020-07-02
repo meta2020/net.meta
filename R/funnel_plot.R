@@ -2,19 +2,22 @@
 #'
 #' @title Funnel plot from frequentist net-meta
 #'
-#' @return a ggplot object
+#' @return plot and ggplot objects
 #'
 #' @importFrom meta metabias metagen
+#' @importFrom netmeta funnel.netmeta
 #' @importFrom stats qnorm
 #' @importFrom ggplot2 geom_polygon geom_segment scale_shape_manual labs annotate
 #'
 #' @param nmt results from model_netmeta function
 #' @param font.size font size
 #' @param text.size text size
-#' @param text.x text position
+#' @param text.x.position text position
 #' @param cap caption
 #' @param x1 left xlim
 #' @param x2 right xlim
+#' @param font.family "Helvetica" or "Times New Roman"
+
 #'
 #' @export
 #' @examples
@@ -42,32 +45,44 @@
 #'   nmt.lab1,
 #'   font.size=10,
 #'   text.size=4,
-#'   text.x=0,
+#'   text.x.position=0,
 #'   x1=-1,
 #'   x2=3,
-#'   cap="HR")
+#'   cap="HR",
+#'   font.family = "Times New Roman"
+#'   )
 #'
 
 funnel_plot <- function(
   nmt,                    ## freq model
   font.size,
   text.size,
-  text.x,
+  text.x.position,
   cap,
   x1,                     ## x-aix left
-  x2){
+  x2,
+  font.family = c("Helvetica", "Times New Roman")
+  ){
 
   ## funnel plot data
-  netmeta.f <- meta::funnel(nmt,
-    order = nmt$trts, legend = TRUE,
-    pos.legend = "bottomright", pos.tests = "topleft",
-    linreg = TRUE, rank = FALSE, mm = FALSE, digits.pval = 2)
+  netmeta.f <- funnel.netmeta(nmt,
+                      order = nmt$trts, legend = TRUE,
+                      pos.legend = "bottomright", pos.tests = "topleft",
+                      linreg = TRUE, rank = FALSE, mm = FALSE, digits.pval = 2)
 
   ## change treatment legend
   trt <- nmt$id.treatment
-  treat1 <- factor(netmeta.f$treat1, labels = trt$description[trt$label %in% netmeta.f$treat1])
-  treat2 <- factor(netmeta.f$treat2, labels = trt$description[trt$label %in% netmeta.f$treat2])
-  netmeta.f$comparison <- factor(paste0(treat1,":",treat2), levels = unique(paste0(treat1,":",treat2)))
+  if(sum(trt$label %in% netmeta.f$treat1)>0){
+    treat1 <- factor(netmeta.f$treat1, labels = trt$description[trt$label %in% netmeta.f$treat1])
+    treat2 <- factor(netmeta.f$treat2, labels = trt$description[trt$label %in% netmeta.f$treat2])
+    netmeta.f$comparison <- factor(paste0(treat1,":",treat2), levels = unique(paste0(treat1,":",treat2)))
+  }
+  else{
+    treat1 <- factor(netmeta.f$treat1)
+    treat2 <- factor(netmeta.f$treat2)
+    netmeta.f$comparison <- factor(paste0(treat1,":",treat2), levels = unique(paste0(treat1,":",treat2)))
+
+  }
 
   ## p-value
   bias<-metabias(metagen(TE.adj, seTE, data = netmeta.f), k.min=9)
@@ -102,10 +117,10 @@ p<-ggplot(data=netmeta.f)+
   labs(x=paste0(cap, " centerd at comparison-specific effect"),
        y="Standard Error")+
   theme_tufte()+
-  theme(text = element_text(size = font.size,family = "Helvetica"))+
+  theme(text = element_text(size = font.size,family = font.family))+
   theme(legend.title=element_blank())+
-  annotate("text", x = text.x, y = 0, label = paste0("P = ", round(bias$p.value,3), " (Egger's test)"),
-           family="Helvetica", size=text.size)
+  annotate("text", x = text.x.position, y = 0, label = paste0("P = ", round(bias$p.value,3), " (Egger's test)"),
+           family=font.family, size=text.size)
 
 p
 }

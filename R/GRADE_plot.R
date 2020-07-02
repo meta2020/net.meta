@@ -10,6 +10,7 @@
 #' @param RESULT GRADE matrix result
 #' @param font.size font size
 #' @param lab.size label size
+#' @param font.family "Helvetica" or "Times New Roman"
 #'
 #' @export
 #' @examples
@@ -69,7 +70,9 @@
 GRADE_plot <- function(
   RESULT,   ## result from grades.RData
   font.size,
-  lab.size){
+  lab.size,
+  font.family = c("Helvetica", "Times New Roman")
+  ){
 
 RESULT$group <- rownames(RESULT)
 m.result <- melt(RESULT, id="group")
@@ -101,7 +104,7 @@ p<-ggplot(m.result,
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.border = element_rect(fill=NA,color="white", size=0, linetype="solid"),
-          text = element_text(family = "Helvetica")
+          text = element_text(family = font.family)
     ) +
     scale_fill_manual(values=gyr)+
     scale_x_discrete(position = "top")+

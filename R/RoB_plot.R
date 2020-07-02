@@ -9,6 +9,7 @@
 #' @param study.CM contribution matrix
 #' @param rob.ind risk of bias or indirectness
 #' @param lab.size label size
+#' @param font.family "Helvetica" or "Times New Roman"
 #'
 #' @export
 #' @examples
@@ -42,7 +43,9 @@
 RoB_plot <- function(
   study.CM,
   rob.ind,
-  lab.size){
+  lab.size,
+  font.family = c("Helvetica", "Times New Roman")
+  ){
 
 t.CM <- as.data.frame(t(study.CM))
 t.CM$study <- colnames(study.CM)
@@ -67,7 +70,7 @@ ggplot(m.CM, aes(x = variable, y = value, fill = rob.ind))+
   scale_x_discrete(limits=rev(comp.order))+
   scale_colour_discrete(guide=FALSE)+
   theme(
-    text = element_text(family = "Helvetica"),
+    text = element_text(family = font.family),
     legend.title=element_blank(),
     legend.position = "none",
     axis.text.y = element_text(angle = 0, color = "black", size = lab.size))

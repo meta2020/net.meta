@@ -16,8 +16,13 @@
 #' @param ofs distance between edges in the net graph
 #' @param lab an optional vector with treatment labels in the net graph
 #' @param font.size font size
+#' @param title.size sucra title size
+#' @param sucra.text.size sucra text size
 #' @param pos a [0, 1] specifying the position of the number of studies on the lines connecting treatments (edges)
 #' @param labels label of the whole plots
+#' @param font.family "Helvetica" or "Times New Roman"
+#' @param net.scale the scaled size of the net plot
+#' @param plot.scale the scaled size of the sucra plot
 #'
 #' @export
 #' @examples
@@ -55,7 +60,11 @@
 #' nmt1, sucra1,
 #' lab=trt1$description,
 #' scl=1.1,ofs =0,
-#' font.size = 0.3, pos=0.5,
+#' font.size = 1,
+#' pos=0.5,
+#' title.size=10,
+#' sucra.text.size=4,
+#' font.family="Helvetica",
 #' labels="")
 #'
 
@@ -66,8 +75,13 @@ net_score_plot <- function(
   ofs=0.05,
   lab,
   font.size,
+  title.size,
+  sucra.text.size,
   pos = 0.5,
-  labels=""){
+  labels="",
+  font.family = c("Helvetica", "Times New Roman"),
+  net.scale=1.1,
+  plot.scale=0.7){
 
 op <- par(family = "sans")
 netgraph(
@@ -87,12 +101,12 @@ netgraph(
   pos.number.of.studies = pos,
   col.number.of.studies = "black",
   bg.number.of.studies = "grey",
-  cex=font.size+0.5,
+  cex=font.size,
   family= "sans")
 
 par(op)
 
-p1 = recordPlot()
+p1 <- recordPlot()
 
 p2 <-ggplot(sucra, aes(y = sucra, x = 0, label = treatment)) +
   geom_vline(xintercept = 0)+
@@ -101,25 +115,31 @@ p2 <-ggplot(sucra, aes(y = sucra, x = 0, label = treatment)) +
   ylab("")+
   xlab("")+
   theme_tufte()+
+  ggtitle("SUCRA")+
   theme(
-    text = element_text(family = "Helvetica"),
+    text = element_text(family = font.family),
     axis.ticks.x = element_blank(),
     axis.text.x  = element_blank(),
     axis.title.x = element_blank(),
-    plot.title   = element_text(hjust = 0, size=8)
+    plot.title = element_text(hjust = 0, size=title.size, family = font.family)
   )+
   xlim(0,1)+
-  ggtitle("SUCRA")+
   geom_text_repel(
     nudge_x      = 0.1,
     direction    = "y",
     hjust        = 0,
     segment.size = 0.2,
-    family="Helvetica",
-    size = font.size*10
+    family=font.family,
+    size = sucra.text.size
   )
 
-p<-plot_grid(p1, p2, labels = labels, rel_widths = c(2, 1))
-p
+plot_grid(p1, p2, #layout_matrix=lay,
+          labels = labels,
+          #align="h",
+          nrow = 1,
+          rel_widths = c(1.5, 1),
+          #rel_heights = 1,
+          scale = c(net.scale,plot.scale),
+          label_fontfamily = font.family)
 
 }
