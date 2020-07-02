@@ -16,7 +16,7 @@ GRADE_plot(
 
 \item{font.size}{font size}
 
-\item{lab.size}{label size}
+\item{lab.size}{text size}
 
 \item{font.family}{"Helvetica" or "Times New Roman"}
 }

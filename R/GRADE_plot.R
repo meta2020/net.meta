@@ -9,7 +9,7 @@
 #'
 #' @param RESULT GRADE matrix result
 #' @param font.size font size
-#' @param lab.size label size
+#' @param lab.size text size
 #' @param font.family "Helvetica" or "Times New Roman"
 #'
 #' @export
@@ -92,7 +92,7 @@ gyr <- c("No concerns"="#00CC00","Undetected"="#00CC00",
 p<-ggplot(m.result,
     aes(x=variable, y=group, fill=value)) +
     geom_tile(colour="white", size=1,stat="identity",linejoin="round") + #rectangles for each correlation
-    geom_text(aes(label = value), size=font.size,family = "Helvetica" ) +
+    geom_text(aes(label = value), size=font.size,family = font.family) +
     theme_tufte() +
     theme(axis.text.x = element_text(angle = 0, face = "bold", color = "black", size = lab.size),
           axis.text.y = element_text(angle = 0, color = "black", size = lab.size),
