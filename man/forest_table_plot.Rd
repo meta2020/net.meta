@@ -14,7 +14,7 @@ forest_table_plot(
   x.lab,
   title.size,
   text.size,
-  point.size = 5,
+  point.size = 4,
   labels = NULL,
   plot.scale = 0.9,
   font.family = c("Helvetica", "Times New Roman")
