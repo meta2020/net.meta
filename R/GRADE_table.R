@@ -93,7 +93,7 @@ heter <- function(EF=c("diff", "ratio"),
 #'
 #' @return GRADE table matrix
 #'
-#' @importFrom netmeta decomp.design
+#' @importFrom netmeta decomp.design netsplit
 #' @importFrom stats complete.cases
 #'
 #' @param study.CM contribution matrix from sutdyCM_matrix
@@ -219,7 +219,7 @@ dd <- decomp.design(nmt, tau.preset = nmt$tau.preset, warn = TRUE)
 #inc.X <- dd$Q.decomp$pval[3]
 inc.X <- dd[["Q.inc.random"]]$pval
 
-ns <- netmeta::netsplit(nmt, method = "SIDDE")
+ns <- netsplit(nmt, method = "SIDDE")
 inc.P <- data.frame(inc.p=ns$compare.random, row.names = ns$compare.random[,1])
 
 #inconsist.res <- ns

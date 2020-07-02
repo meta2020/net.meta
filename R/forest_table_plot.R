@@ -82,7 +82,7 @@ forest_table_plot <- function(
   x.lab,
   title.size,
   text.size,
-  point.size=5,
+  point.size=4,
   labels=NULL,
   plot.scale=0.9,
   font.family = c("Helvetica", "Times New Roman")
@@ -258,7 +258,7 @@ plot_grid(plot, tab,
             plot.title = element_text(hjust = 0, size=title.size, family = font.family))+
       geom_errorbarh(aes(xmin=low3, xmax=up3), height=.2, color="blue") +
       geom_errorbarh(aes(xmin=low2, xmax=up2), height=.2, color="red") +
-      geom_point(aes(x=mean2),shape=25,size=5, fill="red",color="red", alpha=0.5)
+      geom_point(aes(x=mean2),shape=25,size=point.size, fill="red",color="red", alpha=0.5)
 
     ## table
     tab_base <- ggplot(df, aes(y=label)) +
