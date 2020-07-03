@@ -114,7 +114,7 @@ p<-ggplot(data=netmeta.f)+
   geom_point(aes(x=TE.adj, y=seTE, color=comparison, shape=comparison), size=3)+
   scale_shape_manual(values=1:nlevels(netmeta.f$comparison))+
   xlim(x1,x2)+
-  labs(x=paste0(cap, " centerd at comparison-specific effect"),
+  labs(x=paste0(cap, " centered at comparison-specific effect"),
        y="Standard Error")+
   theme_tufte()+
   theme(text = element_text(size = font.size,family = font.family))+
