@@ -85,7 +85,7 @@ funnel_plot <- function(
   }
 
   ## p-value
-  bias<-metabias(metagen(TE.adj, seTE, data = netmeta.f), k.min=9)
+  bias<-metabias(metagen(TE.adj, seTE, data = netmeta.f), k.min=3)
 
   ## set mean scale
   if (nmt$outcome=="MD"){mean=0}
