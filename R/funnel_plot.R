@@ -72,9 +72,9 @@ funnel_plot <- function(
 
   ## change treatment legend
   trt <- nmt$id.treatment
-  if(sum(trt$label %in% netmeta.f$treat1)>0){
-    treat1 <- factor(netmeta.f$treat1, labels = trt$description[trt$label %in% netmeta.f$treat1])
-    treat2 <- factor(netmeta.f$treat2, labels = trt$description[trt$label %in% netmeta.f$treat2])
+  if(sum(trt$id %in% netmeta.f$treat1)>0){
+    treat1 <- factor(netmeta.f$treat1, labels = trt$description[trt$id %in% netmeta.f$treat1])
+    treat2 <- factor(netmeta.f$treat2, labels = trt$description[trt$id %in% netmeta.f$treat2])
     netmeta.f$comparison <- factor(paste0(treat1,":",treat2), levels = unique(paste0(treat1,":",treat2)))
   }
   else{
