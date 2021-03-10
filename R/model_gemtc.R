@@ -43,6 +43,7 @@ model_gemtc <- function(
   mtc.thin){
 
   outcome <- match.arg(outcome)
+
 net <- mtc.network(data = long.data, treatments=id.treatments, description="")
 
 # MD

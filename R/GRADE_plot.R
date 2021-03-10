@@ -64,7 +64,7 @@
 #'   inconsis = inconsist1,
 #'   model="Bayes")
 #'
-#' p<-GRADE_plot(RESULT.B1, font.size=4, lab.size=12)
+#' p<-GRADE_plot(RESULT.B1, font.size=4, lab.size=12, font.family="Helvetica")
 #'
 
 GRADE_plot <- function(
@@ -74,9 +74,11 @@ GRADE_plot <- function(
   font.family = c("Helvetica", "Times New Roman")
   ){
 
-RESULT$group <- rownames(RESULT)
-m.result <- melt(RESULT, id="group")
-study.order <- rownames(RESULT)
+  font.family <- match.arg(font.family)
+
+RESULT$group <- factor(rownames(RESULT),levels = rownames(RESULT))
+m.result <- suppressWarnings(melt(RESULT, id= c("group")))
+study.order <- factor(rownames(RESULT),levels = rownames(RESULT))
 
 group <- m.result[,1]
 value <- m.result[,3]
@@ -109,5 +111,6 @@ p<-ggplot(m.result,
     scale_fill_manual(values=gyr)+
     scale_x_discrete(position = "top")+
     scale_y_discrete(limits=rev(study.order))
+
 }
 
