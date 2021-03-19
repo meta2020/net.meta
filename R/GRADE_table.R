@@ -250,32 +250,32 @@ inc.P[c.name,"inc.p.p"] <- ifelse((inc.D$inc.p.upper < inc.I$inc.p.lower) | (inc
 
 if(model=="Bayes"){
 
-  # if(bmt$outcome=="MD"){
-  #   inconsist<-mtc.nodesplit(
-  #       bmt$mtc.net,
-  #       likelihood = "normal",
-  #       link = "identity",
-  #       linearModel = "random",
-  #       dic=TRUE)
-  # }
-  #
-  # if(bmt$outcome=="RR"){
-  #   inconsist<-mtc.nodesplit(
-  #     bmt$mtc.net,
-  #     likelihood = "binom",
-  #     link = "log",
-  #     linearModel = "random",
-  #     dic=TRUE)
-  # }
-  #
-  # if(bmt$outcome=="HR"){
-  #   inconsist<-mtc.nodesplit(
-  #     bmt$mtc.net,
-  #     likelihood = "poisson",
-  #     link = "log",
-  #     linearModel = "random",
-  #     dic=TRUE)
-  # }
+  if(bmt$outcome=="MD"){
+    inconsist<-mtc.nodesplit(
+        bmt$mtc.net,
+        likelihood = "normal",
+        link = "identity",
+        linearModel = "random",
+        dic=TRUE)
+  }
+
+  if(bmt$outcome=="RR"){
+    inconsist<-mtc.nodesplit(
+      bmt$mtc.net,
+      likelihood = "binom",
+      link = "log",
+      linearModel = "random",
+      dic=TRUE)
+  }
+
+  if(bmt$outcome=="HR"){
+    inconsist<-mtc.nodesplit(
+      bmt$mtc.net,
+      likelihood = "poisson",
+      link = "log",
+      linearModel = "random",
+      dic=TRUE)
+  }
 
   inc <- summary(inconsis)
   inc.P[complete.cases(inc.P$inc.p.p),"inc.p.p"] <- inc$p.value$p
