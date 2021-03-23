@@ -58,13 +58,6 @@ study.assess1 <- read.csv(system.file("extdata", "HR_SH_A.csv", package = "net.m
 
 RB.comp1 <- rep(0, nrow(study.CM1)) #1 Yes, 0 no
 
-inconsist1<-gemtc::mtc.nodesplit(
-bmt1$mtc.net,
-likelihood = "poisson",
-link = "log",
-linearModel = "random",
-dic=TRUE)
-
 RESULT.B1 <- GRADE_table(
   study.CM1,
   bmt1,
@@ -74,9 +67,8 @@ RESULT.B1 <- GRADE_table(
   report.bias=RB.comp1,
   effect.size = "ratio",
   clinical.effect.size=1.25,
-  inconsis = inconsist1,
   model="Bayes")
 
-p<-GRADE_plot(RESULT.B1, font.size=4, lab.size=12)
+GRADE_plot(RESULT.B1, font.size=4, lab.size=12, font.family="Helvetica")
 
 }

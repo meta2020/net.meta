@@ -6,7 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bayesian net-meta model for MD, HR, and RR — model_gemtc • net.meta</title>
+<title>Bayesian net-meta model for MD, HR, and RR
+This function is the warpper of mtc.network, mtc.model, mtc.run,
+and relative.effect from gemtc package.
+R packgae gemtc and rjags are required. — model_gemtc • net.meta</title>
 
 
 <!-- jquery -->
@@ -39,8 +42,13 @@
 
 
 
-<meta property="og:title" content="Bayesian net-meta model for MD, HR, and RR — model_gemtc" />
-<meta property="og:description" content="This function is the warpper of mtc.network, mtc.model, mtc.run, and relative.effect from gemtc package. 
+<meta property="og:title" content="Bayesian net-meta model for MD, HR, and RR
+This function is the warpper of mtc.network, mtc.model, mtc.run,
+and relative.effect from gemtc package.
+R packgae gemtc and rjags are required. — model_gemtc" />
+<meta property="og:description" content="Bayesian net-meta model for MD, HR, and RR
+This function is the warpper of mtc.network, mtc.model, mtc.run,
+and relative.effect from gemtc package.
 R packgae gemtc and rjags are required." />
 
 
@@ -81,18 +89,21 @@ R packgae gemtc and rjags are required." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/meta2020/net.meta/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -109,25 +120,30 @@ R packgae gemtc and rjags are required." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Bayesian net-meta model for MD, HR, and RR</h1>
+    <h1>Bayesian net-meta model for MD, HR, and RR
+This function is the warpper of mtc.network, mtc.model, mtc.run,
+and relative.effect from gemtc package.
+R packgae gemtc and rjags are required.</h1>
     <small class="dont-index">Source: <a href='https://github.com/meta2020/net.meta/blob/master/R/model_gemtc.R'><code>R/model_gemtc.R</code></a></small>
     <div class="hidden name"><code>model_gemtc.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function is the warpper of mtc.network, mtc.model, mtc.run, and relative.effect from gemtc package. <br />
+    <p>Bayesian net-meta model for MD, HR, and RR
+This function is the warpper of mtc.network, mtc.model, mtc.run,
+and relative.effect from gemtc package.
 R packgae gemtc and rjags are required.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>model_gemtc</span>(
-  <span class='no'>long.data</span>,
-  <span class='no'>id.treatments</span>,
-  <span class='no'>reference</span>,
-  <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"MD"</span>, <span class='st'>"HR"</span>, <span class='st'>"RR"</span>),
-  <span class='no'>mtc.n.adapt</span>,
-  <span class='no'>mtc.n.iter</span>,
-  <span class='no'>mtc.thin</span>
-)</pre>
+    <pre class="usage"><span class='fu'>model_gemtc</span><span class='op'>(</span>
+  <span class='va'>long.data</span>,
+  <span class='va'>id.treatments</span>,
+  <span class='va'>reference</span>,
+  outcome <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"MD"</span>, <span class='st'>"HR"</span>, <span class='st'>"RR"</span><span class='op'>)</span>,
+  <span class='va'>mtc.n.adapt</span>,
+  <span class='va'>mtc.n.iter</span>,
+  <span class='va'>mtc.thin</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -150,15 +166,19 @@ R packgae gemtc and rjags are required.</p>
     </tr>
     <tr>
       <th>mtc.n.adapt</th>
-      <td><p>the number of adaptation (or tuning, burn-in) iterations, default is 5000; means to discard 1-5000 of the interations</p></td>
+      <td><p>the number of adaptation (or tuning, burn-in) iterations,
+default is 5000, which means to discard 1-5000 of the iterations.</p></td>
     </tr>
     <tr>
       <th>mtc.n.iter</th>
-      <td><p>the number of simulation iteration, default is 10000; means to perform 10000 simulations</p></td>
+      <td><p>the number of simulation iteration, default is 10000,
+which means to perform 10000 simulations</p></td>
     </tr>
     <tr>
       <th>mtc.thin</th>
-      <td><p>default is 20, means to extract 20th value; details in mtc.run from gemtc package</p></td>
+      <td><p>default is 20,
+which means to extract 20th value;
+details in mtc.run from gemtc package</p></td>
     </tr>
     </table>
 
@@ -167,29 +187,31 @@ R packgae gemtc and rjags are required.</p>
     <p>Summary list of the results</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>LDT1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"HR_SH_D.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"net.meta"</span>))
-<span class='no'>trt1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"HR_SH_D.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"net.meta"</span>),
-    <span class='kw'>header</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>quote</span> <span class='kw'>=</span> <span class='st'>'"'</span>, <span class='kw'>stringsAsFactors</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
+    <pre class="examples"><div class='input'>
+<span class='va'>LDT1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"HR_SH_D.csv"</span>, package <span class='op'>=</span> <span class='st'>"net.meta"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>trt1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"HR_SH_D.txt"</span>, package <span class='op'>=</span> <span class='st'>"net.meta"</span><span class='op'>)</span>,
+    header<span class='op'>=</span><span class='cn'>TRUE</span>,quote <span class='op'>=</span> <span class='st'>'"'</span>, stringsAsFactors<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='no'>trt1</span>$<span class='no'>description</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>trt1</span>$<span class='no'>description</span>, <span class='no'>trt1</span>$<span class='no'>description</span>)
-<span class='no'>LDT1</span>$<span class='no'>study</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>LDT1</span>$<span class='no'>study</span>, <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>LDT1</span>$<span class='no'>study</span>))
+<span class='va'>trt1</span><span class='op'>$</span><span class='va'>description</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>trt1</span><span class='op'>$</span><span class='va'>description</span>, <span class='va'>trt1</span><span class='op'>$</span><span class='va'>description</span><span class='op'>)</span>
+<span class='va'>LDT1</span><span class='op'>$</span><span class='va'>study</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>LDT1</span><span class='op'>$</span><span class='va'>study</span>, <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>LDT1</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='no'>bmt1</span> <span class='kw'>&lt;-</span> <span class='fu'>model_gemtc</span>(
-<span class='kw'>long.data</span><span class='kw'>=</span><span class='no'>LDT1</span>,
-<span class='kw'>id.treatments</span><span class='kw'>=</span><span class='no'>trt1</span>,
-<span class='kw'>reference</span><span class='kw'>=</span><span class='st'>"A"</span>,
-<span class='kw'>outcome</span><span class='kw'>=</span><span class='st'>"HR"</span>,
-<span class='kw'>mtc.n.adapt</span> <span class='kw'>=</span> <span class='fl'>5000</span>, <span class='kw'>mtc.n.iter</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>mtc.thin</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; Compiling model graph
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>bmt1</span> <span class='op'>&lt;-</span> <span class='fu'>model_gemtc</span><span class='op'>(</span>
+long.data<span class='op'>=</span><span class='va'>LDT1</span>,
+id.treatments<span class='op'>=</span><span class='va'>trt1</span>,
+reference<span class='op'>=</span><span class='st'>"A"</span>,
+outcome<span class='op'>=</span><span class='st'>"HR"</span>,
+mtc.n.adapt <span class='op'>=</span> <span class='fl'>500</span>, mtc.n.iter <span class='op'>=</span> <span class='fl'>1000</span>, mtc.thin <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Compiling model graph
 #&gt;    Resolving undeclared variables
 #&gt;    Allocating nodes
 #&gt; Graph information:
 #&gt;    Observed stochastic nodes: 34
 #&gt;    Unobserved stochastic nodes: 43
-#&gt;    Total graph size: 643
+#&gt;    Total graph size: 642
 #&gt; 
 #&gt; Initializing model
 #&gt; </div><div class='input'>
-# View(bmt1)
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -206,7 +228,7 @@ R packgae gemtc and rjags are required.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

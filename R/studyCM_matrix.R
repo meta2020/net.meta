@@ -128,7 +128,9 @@ getComparisonContribution <- function(H, comparison){
 
   reduceGraph <- function (g,comparison) {
     getshortest <- function (g,compariston) {
-      return(get.shortest.paths(g,sv(comparison),tv(comparison),mode="out",output="epath",weights=NA)$epath)
+      return(
+        suppressWarnings(get.shortest.paths(g,sv(comparison),tv(comparison),mode="out",output="epath",weights=NA)$epath)
+        )
     }
     # while(edge_connectivity(g,sv(comparison),tv(comparison))>0){
     spath <- getshortest(g,comparison)
@@ -745,6 +747,7 @@ nma.krahn <- function(x, tau.preset = 0, sep.trts = x$sep.trts) {
 #'
 #' study.CM1 <- studyCM_matrix(name1, nmt1)
 #'
+
 
 studyCM_matrix <- function(
   comp.all,   ## pairwise treatment

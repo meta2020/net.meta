@@ -1,22 +1,35 @@
-#' This function is the warpper of mtc.network, mtc.model, mtc.run, and relative.effect from gemtc package. \cr
+#' @title Bayesian net-meta model for MD, HR, and RR
+
+#' This function is the warpper of mtc.network, mtc.model, mtc.run,
+#' and relative.effect from gemtc package.
 #' R packgae gemtc and rjags are required.
 #'
-#' @title Bayesian net-meta model for MD, HR, and RR
 #'
 #' @return Summary list of the results
 #'
 #' @importFrom gemtc mtc.model mtc.network mtc.run relative.effect
 #'
 #' @param long.data data.frame to be analyzed should be formatted in long format
+#'
 #' @param id.treatments data.frame to specify the id and treatments
+#'
 #' @param reference the referential id in the net-meta
+#'
 #' @param outcome the outcome should be MD-mean difference, HR-hazard ratio, and RR-risk ratio
-#' @param mtc.n.adapt the number of adaptation (or tuning, burn-in) iterations, default is 5000; means to discard 1-5000 of the interations
-#' @param mtc.n.iter the number of simulation iteration, default is 10000; means to perform 10000 simulations
-#' @param mtc.thin default is 20, means to extract 20th value; details in mtc.run from gemtc package
+#'
+#' @param mtc.n.adapt the number of adaptation (or tuning, burn-in) iterations,
+#' default is 5000, which means to discard 1-5000 of the iterations.
+#'
+#' @param mtc.n.iter the number of simulation iteration, default is 10000,
+#' which means to perform 10000 simulations
+#'
+#' @param mtc.thin default is 20,
+#' which means to extract 20th value;
+#' details in mtc.run from gemtc package
 #'
 #' @export
 #' @examples
+#'
 #' LDT1 <- read.csv(system.file("extdata", "HR_SH_D.csv", package = "net.meta"))
 #' trt1 <- read.table(system.file("extdata", "HR_SH_D.txt", package = "net.meta"),
 #'     header=TRUE,quote = '"', stringsAsFactors=FALSE)
@@ -24,15 +37,15 @@
 #' trt1$description <- factor(trt1$description, trt1$description)
 #' LDT1$study <- factor(LDT1$study, unique(LDT1$study))
 #'
+#' set.seed(1)
 #' bmt1 <- model_gemtc(
 #' long.data=LDT1,
 #' id.treatments=trt1,
 #' reference="A",
 #' outcome="HR",
-#' mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
+#' mtc.n.adapt = 500, mtc.n.iter = 1000, mtc.thin = 20)
 #'
-#' # View(bmt1)
-#
+
 model_gemtc <- function(
   long.data,
   id.treatments,
@@ -81,13 +94,13 @@ if(outcome=="HR"){
   RE  <- relative.effect(mcmc, reference,  preserve.extra = FALSE)
   RET <- summary(RE)
 
-  return(list(
-  mtc.net=net,
-  mtc.model=model,
-  mtc.run=mcmc,
-  relative.effect=RET,
-  outcome = outcome,
-  treatment = id.treatments,
-  ref.treatment = id.treatments[id.treatments$id==reference,]))
+  list(
+    mtc.net=net,
+    mtc.model=model,
+    mtc.run=mcmc,
+    relative.effect=RET,
+    outcome = outcome,
+    treatment = id.treatments,
+    ref.treatment = id.treatments[id.treatments$id==reference,])
 }
 

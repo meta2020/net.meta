@@ -13,8 +13,8 @@ GRADE_table(
   report.bias,
   effect.size = c("diff", "ratio"),
   clinical.effect.size,
-  inconsis,
-  model = c("Bayes", "Freq")
+  model = c("Bayes", "Freq"),
+  imput.global.p = FALSE
 )
 }
 \arguments{
@@ -30,13 +30,13 @@ GRADE_table(
 
 \item{report.bias}{reported bias}
 
-\item{effect.size}{two types: diff-difference; ratio-ratio}
+\item{effect.size}{two types: "diff": difference; "ratio": ratio}
 
 \item{clinical.effect.size}{clinical effect size}
 
-\item{inconsis}{inconsistence from mtc.nodesplit}
+\item{model}{"Bayes": Bayesian net-meta model or}
 
-\item{model}{Bayes-bayesian net-meta model, Freq-frequentist net-meta model}
+\item{imput.global.p}{whether to impute p value of inconsistency}
 }
 \value{
 GRADE table matrix
@@ -52,12 +52,13 @@ trt1 <- read.table(system.file("extdata", "HR_SH_D.txt", package = "net.meta"),
 trt1$description <- factor(trt1$description, trt1$description)
 LDT1$study <- factor(LDT1$study, unique(LDT1$study))
 
+set.seed(1)
 bmt1 <- model_gemtc(
 long.data=LDT1,
 id.treatments=trt1,
 reference="A",
 outcome="HR",
-mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
+mtc.n.adapt = 500, mtc.n.iter = 1000, mtc.thin = 20)
 
 nmt1 <- model_netmeta(long.data = LDT1,
 treatment=LDT1$treatment,
@@ -76,12 +77,6 @@ study.assess1 <- read.csv(system.file("extdata", "HR_SH_A.csv", package = "net.m
 
 RB.comp1 <- rep(0, nrow(study.CM1)) #1 Yes, 0 no
 
-inconsist1<-gemtc::mtc.nodesplit(
-bmt1$mtc.net,
-likelihood = "poisson",
-link = "log",
-linearModel = "random",
-dic=TRUE)
 
 RESULT.F1 <- GRADE_table(
   study.CM1,
@@ -92,7 +87,6 @@ RESULT.F1 <- GRADE_table(
   report.bias=RB.comp1,
   effect.size = "ratio",
   clinical.effect.size=1.25,
-  inconsis = inconsist1,
   model="Freq")
 
 RESULT.B1 <- GRADE_table(
@@ -104,7 +98,6 @@ RESULT.B1 <- GRADE_table(
   report.bias=RB.comp1,
   effect.size = "ratio",
   clinical.effect.size=1.25,
-  inconsis = inconsist1,
   model="Bayes")
 
 }

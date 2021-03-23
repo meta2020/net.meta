@@ -2,7 +2,10 @@
 % Please edit documentation in R/model_gemtc.R
 \name{model_gemtc}
 \alias{model_gemtc}
-\title{Bayesian net-meta model for MD, HR, and RR}
+\title{Bayesian net-meta model for MD, HR, and RR
+This function is the warpper of mtc.network, mtc.model, mtc.run,
+and relative.effect from gemtc package.
+R packgae gemtc and rjags are required.}
 \usage{
 model_gemtc(
   long.data,
@@ -23,20 +26,27 @@ model_gemtc(
 
 \item{outcome}{the outcome should be MD-mean difference, HR-hazard ratio, and RR-risk ratio}
 
-\item{mtc.n.adapt}{the number of adaptation (or tuning, burn-in) iterations, default is 5000; means to discard 1-5000 of the interations}
+\item{mtc.n.adapt}{the number of adaptation (or tuning, burn-in) iterations,
+default is 5000, which means to discard 1-5000 of the iterations.}
 
-\item{mtc.n.iter}{the number of simulation iteration, default is 10000; means to perform 10000 simulations}
+\item{mtc.n.iter}{the number of simulation iteration, default is 10000,
+which means to perform 10000 simulations}
 
-\item{mtc.thin}{default is 20, means to extract 20th value; details in mtc.run from gemtc package}
+\item{mtc.thin}{default is 20,
+which means to extract 20th value;
+details in mtc.run from gemtc package}
 }
 \value{
 Summary list of the results
 }
 \description{
-This function is the warpper of mtc.network, mtc.model, mtc.run, and relative.effect from gemtc package. \cr
+Bayesian net-meta model for MD, HR, and RR
+This function is the warpper of mtc.network, mtc.model, mtc.run,
+and relative.effect from gemtc package.
 R packgae gemtc and rjags are required.
 }
 \examples{
+
 LDT1 <- read.csv(system.file("extdata", "HR_SH_D.csv", package = "net.meta"))
 trt1 <- read.table(system.file("extdata", "HR_SH_D.txt", package = "net.meta"),
     header=TRUE,quote = '"', stringsAsFactors=FALSE)
@@ -44,12 +54,12 @@ trt1 <- read.table(system.file("extdata", "HR_SH_D.txt", package = "net.meta"),
 trt1$description <- factor(trt1$description, trt1$description)
 LDT1$study <- factor(LDT1$study, unique(LDT1$study))
 
+set.seed(1)
 bmt1 <- model_gemtc(
 long.data=LDT1,
 id.treatments=trt1,
 reference="A",
 outcome="HR",
-mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
+mtc.n.adapt = 500, mtc.n.iter = 1000, mtc.thin = 20)
 
-# View(bmt1)
 }

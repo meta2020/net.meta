@@ -2,7 +2,10 @@
 % Please edit documentation in R/model_netmeta.R
 \name{model_netmeta}
 \alias{model_netmeta}
-\title{Frequentist net-meta model for MD, HR, and RR}
+\title{Frequentist net-meta model for MD, HR, and RR
+
+This function is the warpper of netmeta and pairwise functions from netmeta package. \cr
+R packgae netmeta is required.}
 \usage{
 model_netmeta(
   long.data,
@@ -13,7 +16,10 @@ model_netmeta(
 )
 }
 \arguments{
-\item{long.data}{data.frame to be analyzed should be formatted in long format}
+\item{long.data}{data.frame to be analyzed should be formatted in long format
+"MD" needs treat, n, mean, sd;
+"RR" needs treat, event, n
+"HR" needs treat, event, time}
 
 \item{id.treatments}{data.frame to specify the id and treatments}
 
@@ -27,10 +33,13 @@ model_netmeta(
 Summary list of the results
 }
 \description{
+Frequentist net-meta model for MD, HR, and RR
+
 This function is the warpper of netmeta and pairwise functions from netmeta package. \cr
 R packgae netmeta is required.
 }
 \examples{
+
 LDT1 <- read.csv(system.file("extdata", "HR_SH_D.csv", package = "net.meta"))
 trt1 <- read.table(system.file("extdata", "HR_SH_D.txt", package = "net.meta"),
     header=TRUE,quote = '"', stringsAsFactors=FALSE)
@@ -41,7 +50,7 @@ LDT1$study <- factor(LDT1$study, unique(LDT1$study))
 trt1$label <- paste0(trt1$id,"-", trt1$description)
 LDT1$label <- factor(LDT1$treatment, labels = trt1$label)
 
-
+set.seed(1)
 nmt.lab1 <- model_netmeta(
   long.data=LDT1[,-2],
   treatment=LDT1$label,
@@ -49,5 +58,4 @@ nmt.lab1 <- model_netmeta(
   reference = "A",
   outcome="HR")
 
-# View(nmt.lab1)
 }

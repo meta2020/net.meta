@@ -1,5 +1,10 @@
+##
+## EXTRACT CI/CRI/PI
+##
 
-CI.matrix <- function(bmt, nmt){
+CI.matrix <- function(bmt,  ## BAYESIAN MODEL
+                      nmt   ## FREQ MODEL
+                      ){
   ## CrI matrix
   name <- as.character(bmt$treatment$description)
   id <- as.character(bmt$treatment$id)
@@ -43,15 +48,20 @@ CI.matrix <- function(bmt, nmt){
   return(MD)
 }
 
-### Imprecision
+##
+### IMPRECISION CALCULATION
+##
+
 imp <- function(EF=c("diff", "ratio"),
                 set,
                 low, up){
+
   if(EF=="diff"){
     im.cond3 <-   (low < -set) + (set < up) == 2  # M
     im.cond2.1 <- (-set < low) + (low < 0) + (up > set) == 3 #S
     im.cond2.2 <- (low < -set) + (0 < up)  + (up < set) == 3 #S
   }
+
   if(EF=="ratio"){
     im.cond3 <-   (low < 1/set) + (set < up) == 2  # M
     im.cond2.1 <- (1/set < low)  + (low < 1) + (up > set) == 3 #S
@@ -78,6 +88,7 @@ heter <- function(EF=c("diff", "ratio"),
   h.cond1.2 <- (i.pi==2) + (i.ci ==2) == 2 ## N
   h.cond1.3 <- (i.pi==3) + (i.ci ==3) == 2 ## N
   h.cond3   <- (i.pi==3) + (i.ci ==1) == 2 ## M
+
   heterog <- ifelse(h.cond1.1|h.cond1.2|h.cond1.3,1,ifelse(h.cond3,3,2))
 
   return(heterog)
@@ -97,15 +108,24 @@ heter <- function(EF=c("diff", "ratio"),
 #' @importFrom stats complete.cases
 #'
 #' @param study.CM contribution matrix from sutdyCM_matrix
+#'
 #' @param bmt result from bayesian net-meta model_gemtc
+#'
 #' @param nmt result from frequentist net-meta model_netmmeta
+#'
 #' @param rob risk of bias
+#'
 #' @param ind indirectness
+#'
 #' @param report.bias reported bias
-#' @param effect.size two types: diff-difference; ratio-ratio
+#'
+#' @param effect.size two types: "diff": difference; "ratio": ratio
+#'
 #' @param clinical.effect.size clinical effect size
-#' @param inconsis inconsistence from mtc.nodesplit
-#' @param model Bayes-bayesian net-meta model, Freq-frequentist net-meta model
+#'
+#' @param imput.global.p whether to impute p value of inconsistency
+#'
+#' @param model "Bayes": Bayesian net-meta model or
 #'
 #' @export
 #' @examples
@@ -116,12 +136,13 @@ heter <- function(EF=c("diff", "ratio"),
 #' trt1$description <- factor(trt1$description, trt1$description)
 #' LDT1$study <- factor(LDT1$study, unique(LDT1$study))
 #'
+#' set.seed(1)
 #' bmt1 <- model_gemtc(
 #' long.data=LDT1,
 #' id.treatments=trt1,
 #' reference="A",
 #' outcome="HR",
-#' mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
+#' mtc.n.adapt = 500, mtc.n.iter = 1000, mtc.thin = 20)
 #'
 #' nmt1 <- model_netmeta(long.data = LDT1,
 #' treatment=LDT1$treatment,
@@ -140,12 +161,6 @@ heter <- function(EF=c("diff", "ratio"),
 #'
 #' RB.comp1 <- rep(0, nrow(study.CM1)) #1 Yes, 0 no
 #'
-#' inconsist1<-gemtc::mtc.nodesplit(
-#' bmt1$mtc.net,
-#' likelihood = "poisson",
-#' link = "log",
-#' linearModel = "random",
-#' dic=TRUE)
 #'
 #' RESULT.F1 <- GRADE_table(
 #'   study.CM1,
@@ -156,7 +171,6 @@ heter <- function(EF=c("diff", "ratio"),
 #'   report.bias=RB.comp1,
 #'   effect.size = "ratio",
 #'   clinical.effect.size=1.25,
-#'   inconsis = inconsist1,
 #'   model="Freq")
 #'
 #' RESULT.B1 <- GRADE_table(
@@ -168,7 +182,6 @@ heter <- function(EF=c("diff", "ratio"),
 #'   report.bias=RB.comp1,
 #'   effect.size = "ratio",
 #'   clinical.effect.size=1.25,
-#'   inconsis = inconsist1,
 #'   model="Bayes")
 #'
 
@@ -181,21 +194,24 @@ GRADE_table <- function(
   report.bias,
   effect.size = c("diff", "ratio"),
   clinical.effect.size,
-  inconsis,
-  model = c("Bayes", "Freq")
+  model = c("Bayes", "Freq"),
+  imput.global.p = FALSE
   ){
 
 ## 1 and 2 from studyCM
+
 within.bias <-  round(as.matrix(study.CM)%*% (rob)*0.01)
 indirectness <- round(as.matrix(study.CM) %*% (ind)*0.01)
 
 ## 3 reporting bias
 
 ## 4 and 5 CrI, CI, PI
+
 MD <- CI.matrix(bmt, nmt)
 re.MD <- MD[rownames(study.CM),]
 
 ## 4.imprecision and 5.heterogeneity
+
 if(model=="Freq"){
 imprecision <- imp(effect.size, clinical.effect.size, low=re.MD$ci.low, up=re.MD$ci.up)
 
@@ -231,8 +247,7 @@ if(model=="Freq"){
 inc.P$inc.p.p <- ifelse(inc.P$inc.p.p>=0.1 & complete.cases(inc.P$inc.p.p), 1,inc.P$inc.p.p)
 c.name <-rownames(inc.P[inc.P$inc.p.p<0.1 & complete.cases(inc.P),])
 
-#if(length(c.name)>0){
-if (typeof(inconsis)=="list"){
+if(length(c.name)>0){
 
 inc.D <- data.frame(inc.p=ns$direct.random, row.names = ns$compare.random[,1])[c.name,]
 inc.I <- data.frame(inc.p=ns$indirect.random, row.names = ns$compare.random[,1])[c.name,]
@@ -244,6 +259,7 @@ inc.P[c.name,"inc.p.p"] <- ifelse((inc.D$inc.p.upper < inc.I$inc.p.lower) | (inc
               ifelse((i.D==3 | i.I==3), 3,
                      ifelse((i.D==2 | i.I==2),2,1)))
 
+
 }
 
 }
@@ -251,7 +267,7 @@ inc.P[c.name,"inc.p.p"] <- ifelse((inc.D$inc.p.upper < inc.I$inc.p.lower) | (inc
 if(model=="Bayes"){
 
   if(bmt$outcome=="MD"){
-    inconsist<-mtc.nodesplit(
+    inconsist<- gemtc::mtc.nodesplit(
         bmt$mtc.net,
         likelihood = "normal",
         link = "identity",
@@ -260,7 +276,7 @@ if(model=="Bayes"){
   }
 
   if(bmt$outcome=="RR"){
-    inconsist<-mtc.nodesplit(
+    inconsist<- gemtc::mtc.nodesplit(
       bmt$mtc.net,
       likelihood = "binom",
       link = "log",
@@ -269,7 +285,7 @@ if(model=="Bayes"){
   }
 
   if(bmt$outcome=="HR"){
-    inconsist<-mtc.nodesplit(
+    inconsist<-gemtc::mtc.nodesplit(
       bmt$mtc.net,
       likelihood = "poisson",
       link = "log",
@@ -277,14 +293,15 @@ if(model=="Bayes"){
       dic=TRUE)
   }
 
-  inc <- summary(inconsis)
+  inc <- summary(inconsist)
   inc.P[complete.cases(inc.P$inc.p.p),"inc.p.p"] <- inc$p.value$p
 
   inc.P$inc.p.p <- ifelse(inc.P$inc.p.p>=0.1 & complete.cases(inc.P$inc.p.p), 1,inc.P$inc.p.p)
   c.name <-rownames(inc.P[inc.P$inc.p.p<0.1 & complete.cases(inc.P),])
 
-  #if(length(c.name)>0){
-  if (typeof(inconsis)=="list"){
+  if(length(c.name)>0){
+
+  #if (typeof(inconsist)=="list"){
     #inc <- summary(inconsist)
 
     inc.D <- data.frame(inc.p=inc$dir.effect, row.names = paste0(inc$dir.effect$t1,":",inc$dir.effect$t2))[c.name,]
@@ -303,7 +320,8 @@ if(model=="Bayes"){
   }
 }
 
-inc.P[is.na(inc.P)] <- ifelse(inc.X<0.05, 3, ifelse(inc.X>0.1,1,2))
+if(imput.global.p) inc.P[is.na(inc.P)] <- ifelse(inc.X<0.05, 3, ifelse(inc.X>0.1,1,2))
+
 incoherence.p <- inc.P$inc.p.p
 
 
@@ -311,9 +329,9 @@ incoherence.p <- inc.P$inc.p.p
 
 ## report.bias
 
-
 RESULT <- as.data.frame(matrix(NA, length(nmt$comp.order),7))
 row.names(RESULT) <- rownames(study.CM)
+
 RESULT[,1] <- ifelse(within.bias==1, "No concerns", ifelse(within.bias==2, "Some concerns", "Major concerns"))
 RESULT[,2] <- ifelse(report.bias==0, "Undetected", "Suspected")
 RESULT[,3] <- ifelse(indirectness==1, "No concerns", ifelse(indirectness==2, "Some concerns", "Major concerns"))
@@ -322,13 +340,23 @@ RESULT[,5] <- ifelse(heterogeneity==1, "No concerns", ifelse(heterogeneity==2, "
 RESULT[,6] <- ifelse(incoherence.p==1, "No concerns", ifelse(incoherence.p==2, "Some concerns","Major concerns"))
 incoherence.n <- ifelse(RESULT[,6]=="No concerns", 1,ifelse(RESULT[,6]=="Some concerns", 2, 3))
 incoherence.n[is.na(incoherence.n)] <- 3
+
 #RESULT[,7] <- rep("High", length(nmt$comp.order))
+
 RESULT7.s <- rep(4, length(nmt$comp.order))
 RESULT7 <- round(RESULT7.s-(within.bias-1)/2-(imprecision-1)/2-(heterogeneity-1)/4-(incoherence.n-1)/4)
 RESULT[,7] <- ifelse(RESULT7==4, "High",ifelse(RESULT7==3, "Moderate",ifelse(RESULT7==2, "Low", "Very low")))
 RESULT[is.na(RESULT)] <- "Not applicable"
 
 colnames(RESULT) <- c("Within-study bias", "Reporting bias", "Indirectness","Imprecision","Heterogeneity","Incoherence", "Confidence rating")
-return(RESULT)
+list(GRADE = RESULT,
+     within.bias = within.bias,
+     report.bias = report.bias,
+     indirectness = indirectness,
+     imprecision = imprecision,
+     heterogeneity = heterogeneity,
+     incoherence.p = incoherence.p,
+     inconsist = inc.D,
+     CIs = re.MD)
 
 }

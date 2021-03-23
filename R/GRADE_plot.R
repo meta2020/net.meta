@@ -45,13 +45,6 @@
 #'
 #' RB.comp1 <- rep(0, nrow(study.CM1)) #1 Yes, 0 no
 #'
-#' inconsist1<-gemtc::mtc.nodesplit(
-#' bmt1$mtc.net,
-#' likelihood = "poisson",
-#' link = "log",
-#' linearModel = "random",
-#' dic=TRUE)
-#'
 #' RESULT.B1 <- GRADE_table(
 #'   study.CM1,
 #'   bmt1,
@@ -61,10 +54,9 @@
 #'   report.bias=RB.comp1,
 #'   effect.size = "ratio",
 #'   clinical.effect.size=1.25,
-#'   inconsis = inconsist1,
 #'   model="Bayes")
 #'
-#' p<-GRADE_plot(RESULT.B1, font.size=4, lab.size=12, font.family="Helvetica")
+#' GRADE_plot(RESULT.B1, font.size=4, lab.size=12, font.family="Helvetica")
 #'
 
 GRADE_plot <- function(
@@ -76,6 +68,7 @@ GRADE_plot <- function(
 
   font.family <- match.arg(font.family)
 
+RESULT <- RESULT$GRADE
 RESULT$group <- factor(rownames(RESULT),levels = rownames(RESULT))
 m.result <- suppressWarnings(melt(RESULT, id= c("group")))
 study.order <- factor(rownames(RESULT),levels = rownames(RESULT))
@@ -91,7 +84,7 @@ gyr <- c("No concerns"="#00CC00","Undetected"="#00CC00",
          "High"="#2ECC71","Moderate"="#3498DB","Low"="#F1C40F","Very low"="#E74C3C")
 
 
-p<-ggplot(m.result,
+ggplot(m.result,
     aes(x=variable, y=group, fill=value)) +
     geom_tile(colour="white", size=1,stat="identity",linejoin="round") + #rectangles for each correlation
     geom_text(aes(label = value), size=font.size,family = font.family) +

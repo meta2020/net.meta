@@ -1,20 +1,28 @@
+#' @title Frequentist net-meta model for MD, HR, and RR
+#'
 #' This function is the warpper of netmeta and pairwise functions from netmeta package. \cr
 #' R packgae netmeta is required.
-#'
-#' @title Frequentist net-meta model for MD, HR, and RR
 #'
 #' @return Summary list of the results
 #'
 #' @importFrom netmeta pairwise netmeta
 #'
 #' @param long.data data.frame to be analyzed should be formatted in long format
+#' "MD" needs treat, n, mean, sd;
+#' "RR" needs treat, event, n
+#' "HR" needs treat, event, time
+#'
 #' @param id.treatments data.frame to specify the id and treatments
+#'
 #' @param treatment treatment names or labels
+#'
 #' @param reference the referential id in the net-meta
+#'
 #' @param outcome the outcome should be MD-mean difference, HR-hazard ratio, and RR-risk ratio
 #'
 #' @export
 #' @examples
+#'
 #' LDT1 <- read.csv(system.file("extdata", "HR_SH_D.csv", package = "net.meta"))
 #' trt1 <- read.table(system.file("extdata", "HR_SH_D.txt", package = "net.meta"),
 #'     header=TRUE,quote = '"', stringsAsFactors=FALSE)
@@ -25,7 +33,7 @@
 #' trt1$label <- paste0(trt1$id,"-", trt1$description)
 #' LDT1$label <- factor(LDT1$treatment, labels = trt1$label)
 #'
-#'
+#' set.seed(1)
 #' nmt.lab1 <- model_netmeta(
 #'   long.data=LDT1[,-2],
 #'   treatment=LDT1$label,
@@ -33,7 +41,6 @@
 #'   reference = "A",
 #'   outcome="HR")
 #'
-#' # View(nmt.lab1)
 #
 model_netmeta<- function(
   long.data,
