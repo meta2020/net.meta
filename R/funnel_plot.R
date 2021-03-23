@@ -41,15 +41,14 @@
 #'   reference = trt1$label[1],
 #'   outcome="HR")
 #'
-#' p<-funnel_plot(
+#' funnel_plot(
 #'   nmt.lab1,
 #'   font.size=10,
 #'   text.size=4,
 #'   text.x.position=0,
 #'   x1=-1,
 #'   x2=3,
-#'   cap="HR",
-#'   font.family = "Times New Roman"
+#'   cap="HR"
 #'   )
 #'
 
@@ -61,7 +60,7 @@ funnel_plot <- function(
   cap,
   x1,                     ## x-aix left
   x2,
-  font.family = c("Helvetica", "Times New Roman")
+  font.family = "Helvetica"
   ){
 
   ## funnel plot data

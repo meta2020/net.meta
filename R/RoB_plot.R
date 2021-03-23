@@ -44,7 +44,7 @@ RoB_plot <- function(
   study.CM,
   rob.ind,
   lab.size,
-  font.family = c("Helvetica", "Times New Roman")
+  font.family = "Helvetica"
   ){
 
 t.CM <- as.data.frame(t(study.CM))

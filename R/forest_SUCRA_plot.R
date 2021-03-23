@@ -34,11 +34,11 @@
 #' id.treatments=trt1,
 #' reference="A",
 #' outcome="HR",
-#' mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
+#' mtc.n.adapt = 500, mtc.n.iter = 1000, mtc.thin = 20)
 #'
 #' sucra<-SUCRA(bmt1)
 #'
-#' p <- forest_SUCRA_plot(
+#' forest_SUCRA_plot(
 #' bmt=bmt1,
 #' sucra=sucra,
 #' x.lab="X caption",
@@ -49,7 +49,7 @@
 #' table.text.size=4,
 #' sucra.text.size=4,
 #' labels="Title",
-#' font.family = "Times New Roman",
+#' font.family = "Helvetica",
 #' plot.scale=0.9
 #' )
 #'
@@ -67,7 +67,7 @@ forest_SUCRA_plot <- function(
   table.text.size,
   sucra.text.size,
   labels=NULL,
-  font.family = c("Helvetica", "Times New Roman"),
+  font.family = "Helvetica",
   plot.scale=0.9
   ){
 
@@ -110,7 +110,7 @@ forest_SUCRA_plot <- function(
   plot <- ggplot(df,
                  aes(x=point_est, y = reorder(label, desc(label)))) +
     geom_vline(xintercept = vline, linetype="dashed",size=0.5, alpha=0.5)+
-    geom_errorbarh(aes(xmin=low, xmax=up), height=.2) +
+    geom_errorbarh(aes(xmin=low, xmax=up), height=.2, na.rm = TRUE) +
     geom_point(aes(x=mean),
                shape=point.shape,size=point.size,
                fill="midnightblue", color="midnightblue") +

@@ -17,7 +17,7 @@ forest_SUCRA_plot(
   table.text.size,
   sucra.text.size,
   labels = NULL,
-  font.family = c("Helvetica", "Times New Roman"),
+  font.family = "Helvetica",
   plot.scale = 0.9
 )
 }
@@ -69,11 +69,11 @@ long.data=LDT1,
 id.treatments=trt1,
 reference="A",
 outcome="HR",
-mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
+mtc.n.adapt = 500, mtc.n.iter = 1000, mtc.thin = 20)
 
 sucra<-SUCRA(bmt1)
 
-p <- forest_SUCRA_plot(
+forest_SUCRA_plot(
 bmt=bmt1,
 sucra=sucra,
 x.lab="X caption",
@@ -84,7 +84,7 @@ title.size =12,
 table.text.size=4,
 sucra.text.size=4,
 labels="Title",
-font.family = "Times New Roman",
+font.family = "Helvetica",
 plot.scale=0.9
 )
 

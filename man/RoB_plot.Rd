@@ -4,12 +4,7 @@
 \alias{RoB_plot}
 \title{Risk of bias bar plot}
 \usage{
-RoB_plot(
-  study.CM,
-  rob.ind,
-  lab.size,
-  font.family = c("Helvetica", "Times New Roman")
-)
+RoB_plot(study.CM, rob.ind, lab.size, font.family = "Helvetica")
 }
 \arguments{
 \item{study.CM}{contribution matrix}

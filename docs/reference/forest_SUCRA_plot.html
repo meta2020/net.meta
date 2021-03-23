@@ -133,7 +133,7 @@
   <span class='va'>table.text.size</span>,
   <span class='va'>sucra.text.size</span>,
   labels <span class='op'>=</span> <span class='cn'>NULL</span>,
-  font.family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Helvetica"</span>, <span class='st'>"Times New Roman"</span><span class='op'>)</span>,
+  font.family <span class='op'>=</span> <span class='st'>"Helvetica"</span>,
   plot.scale <span class='op'>=</span> <span class='fl'>0.9</span>
 <span class='op'>)</span></pre>
 
@@ -215,7 +215,7 @@ long.data<span class='op'>=</span><span class='va'>LDT1</span>,
 id.treatments<span class='op'>=</span><span class='va'>trt1</span>,
 reference<span class='op'>=</span><span class='st'>"A"</span>,
 outcome<span class='op'>=</span><span class='st'>"HR"</span>,
-mtc.n.adapt <span class='op'>=</span> <span class='fl'>5000</span>, mtc.n.iter <span class='op'>=</span> <span class='fl'>10000</span>, mtc.thin <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+mtc.n.adapt <span class='op'>=</span> <span class='fl'>500</span>, mtc.n.iter <span class='op'>=</span> <span class='fl'>1000</span>, mtc.thin <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Compiling model graph
 #&gt;    Resolving undeclared variables
 #&gt;    Allocating nodes
@@ -228,7 +228,7 @@ mtc.n.adapt <span class='op'>=</span> <span class='fl'>5000</span>, mtc.n.iter <
 #&gt; </div><div class='input'>
 <span class='va'>sucra</span><span class='op'>&lt;-</span><span class='fu'><a href='SUCRA.html'>SUCRA</a></span><span class='op'>(</span><span class='va'>bmt1</span><span class='op'>)</span>
 
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>forest_SUCRA_plot</span><span class='op'>(</span>
+<span class='fu'>forest_SUCRA_plot</span><span class='op'>(</span>
 bmt<span class='op'>=</span><span class='va'>bmt1</span>,
 sucra<span class='op'>=</span><span class='va'>sucra</span>,
 x.lab<span class='op'>=</span><span class='st'>"X caption"</span>,
@@ -239,10 +239,10 @@ title.size <span class='op'>=</span><span class='fl'>12</span>,
 table.text.size<span class='op'>=</span><span class='fl'>4</span>,
 sucra.text.size<span class='op'>=</span><span class='fl'>4</span>,
 labels<span class='op'>=</span><span class='st'>"Title"</span>,
-font.family <span class='op'>=</span> <span class='st'>"Times New Roman"</span>,
+font.family <span class='op'>=</span> <span class='st'>"Helvetica"</span>,
 plot.scale<span class='op'>=</span><span class='fl'>0.9</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 1 rows containing missing values (geom_errorbarh).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='output co'>#&gt; <span class='warning'>Warning: font family 'Times New Roman' not found in PostScript font database</span></div><div class='input'>
+</div><div class='img'><img src='forest_SUCRA_plot-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

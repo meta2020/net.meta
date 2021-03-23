@@ -12,7 +12,7 @@ funnel_plot(
   cap,
   x1,
   x2,
-  font.family = c("Helvetica", "Times New Roman")
+  font.family = "Helvetica"
 )
 }
 \arguments{
@@ -59,15 +59,14 @@ nmt.lab1 <- model_netmeta(
   reference = trt1$label[1],
   outcome="HR")
 
-p<-funnel_plot(
+funnel_plot(
   nmt.lab1,
   font.size=10,
   text.size=4,
   text.x.position=0,
   x1=-1,
   x2=3,
-  cap="HR",
-  font.family = "Times New Roman"
+  cap="HR"
   )
 
 }

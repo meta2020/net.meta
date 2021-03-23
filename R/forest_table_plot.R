@@ -40,7 +40,7 @@
 #' outcome="HR",
 #' mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
 #'
-#' p<-forest_table_plot(
+#' forest_table_plot(
 #' type="bayesian",
 #' bmt=bmt1,
 #' x.lab = "X caption",
@@ -59,7 +59,7 @@
 #'
 #' # View(nmt1)
 #'
-#' p<-forest_table_plot(
+#' forest_table_plot(
 #' type="all",
 #' bmt=bmt1,
 #' nmt=nmt1,
@@ -68,8 +68,7 @@
 #' x2=50,
 #' title.size =12,
 #' text.size =4,
-#' digits = 2,
-#' font.family="Times New Roman")
+#' digits = 2)
 #'
 
 forest_table_plot <- function(
@@ -85,7 +84,7 @@ forest_table_plot <- function(
   point.size=4,
   labels=NULL,
   plot.scale=0.9,
-  font.family = c("Helvetica", "Times New Roman")
+  font.family = "Helvetica"
   ) {
 
   type <- match.arg(type)
@@ -247,7 +246,7 @@ plot_grid(plot, tab,
     ## forest plot
     plot <- ggplot(df, aes(x=point_est, y=label)) +
       geom_vline(xintercept = vline, linetype="dashed",size=0.5, alpha=0.5)+
-      geom_errorbarh(aes(xmin=low, xmax=up), height=.2) +
+      geom_errorbarh(aes(xmin=low, xmax=up), height=.2, na.rm = TRUE) +
       geom_point(aes(x=mean),shape=24,size=point.size, fill="midnightblue",color="midnightblue", alpha=0.5) +
       ggtitle(paste0("Compared with ", bmt$ref.treatment$description))+
       ylab(NULL) +

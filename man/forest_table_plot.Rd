@@ -17,7 +17,7 @@ forest_table_plot(
   point.size = 4,
   labels = NULL,
   plot.scale = 0.9,
-  font.family = c("Helvetica", "Times New Roman")
+  font.family = "Helvetica"
 )
 }
 \arguments{
@@ -69,7 +69,7 @@ reference="A",
 outcome="HR",
 mtc.n.adapt = 5000, mtc.n.iter = 10000, mtc.thin = 20)
 
-p<-forest_table_plot(
+forest_table_plot(
 type="bayesian",
 bmt=bmt1,
 x.lab = "X caption",
@@ -88,7 +88,7 @@ nmt1 <- model_netmeta(long.data = LDT1,
 
 # View(nmt1)
 
-p<-forest_table_plot(
+forest_table_plot(
 type="all",
 bmt=bmt1,
 nmt=nmt1,
@@ -97,7 +97,6 @@ x1=0,
 x2=50,
 title.size =12,
 text.size =4,
-digits = 2,
-font.family="Times New Roman")
+digits = 2)
 
 }
