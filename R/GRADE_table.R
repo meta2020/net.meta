@@ -239,6 +239,7 @@ ns <- netsplit(nmt, method = "SIDDE")
 inc.P <- data.frame(inc.p=ns$compare.random, row.names = ns$compare.random[,1])
 
 #inconsist.res <- ns
+inc <- NULL
 
 if(sum(complete.cases(inc.P$inc.p.p))>0){
 
@@ -356,7 +357,7 @@ list(GRADE = RESULT,
      imprecision = imprecision,
      heterogeneity = heterogeneity,
      incoherence.p = incoherence.p,
-     inconsist = inc.D,
+     inconsist = inc,
      CIs = re.MD)
 
 }

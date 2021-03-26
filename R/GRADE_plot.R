@@ -68,9 +68,9 @@ GRADE_plot <- function(
 
   font.family <- match.arg(font.family)
 
-RESULT <- RESULT$GRADE
+#RESULT <- RESULT$GRADE
 RESULT$group <- factor(rownames(RESULT),levels = rownames(RESULT))
-m.result <- suppressWarnings(melt(RESULT, id= c("group")))
+m.result <- suppressWarnings(reshape2::melt(RESULT, id= c("group")))
 study.order <- factor(rownames(RESULT),levels = rownames(RESULT))
 
 group <- m.result[,1]
