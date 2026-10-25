@@ -65,6 +65,7 @@ getComparisonContribution <- function(H, comparison){
 
   tv <- function (comparison) {split(comparison)[[1]][2][1]}
 
+  # initRowGraph("A:B")
   initRowGraph <- function(comparison) {
     dedgeList <- lapply(1:length(directs),function(comp) {
       if(H[comparison,comp]>0){
@@ -85,7 +86,7 @@ getComparisonContribution <- function(H, comparison){
     E(dg)[]$flow <- abs(H[comparison,])
     V(dg)[]$label <- V(dg)[]$name
     # E(dg)[]$label <- E(dg)[]$flow
-    dg <- set.edge.attribute(dg,'label',value = E(dg))
+    dg <- igraph::set_edge_attr(dg,'label',index  = E(dg), value = NULL)
     # print(c("isdirected",is.directed(dg)))
     return(dg)
   }
@@ -227,6 +228,7 @@ chkclass <- function(x, class, name = NULL) {
 
 compsplit <- function(x, split) {
 
+  .special.characters <- "^$.?*|+()["
   if (split %in% .special.characters)
     split <- paste("\\", split, sep = "")
 
@@ -437,7 +439,7 @@ nma.krahn <- function(x, tau.preset = 0, sep.trts = x$sep.trts) {
     V3 <- NA
     ##
     for (i in 1:length(covs))
-      V3 <- adiag(V3, covs[[i]])
+      V3 <- magic::adiag(V3, covs[[i]])
     ##
     V3 <- V3[-1, -1]
     ##
@@ -770,7 +772,7 @@ for (i in 1:length(comp.all)){
 study.cm <- getStudyContribution(H,comp.all[i],nmt)$studyRow[,1:2]
 colnames(study.cm) <- c("study", comp.all[i])
 study.cm$id <- seq_len(dim(study.cm)[1])
-w.study.cm<-dcast(study.cm, id~study, value.var = comp.all[i])
+w.study.cm<-reshape2::dcast(study.cm, id~study, value.var = comp.all[i])
 study.CM <- rbind(study.CM, colSums(w.study.cm, na.rm = TRUE))
 }
 dimnames(study.CM)[[1]] <- comp.all

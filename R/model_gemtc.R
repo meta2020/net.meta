@@ -1,6 +1,6 @@
-#' @title Bayesian net-meta model for MD, HR, and RR
-
-#' This function is the warpper of mtc.network, mtc.model, mtc.run,
+#' @title Bayesian net-meta model
+#'
+#' @description This function is the warpper of mtc.network, mtc.model, mtc.run,
 #' and relative.effect from gemtc package.
 #' R packgae gemtc and rjags are required.
 #'

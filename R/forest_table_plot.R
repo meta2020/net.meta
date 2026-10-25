@@ -84,7 +84,7 @@ forest_table_plot <- function(
   point.size=4,
   labels=NULL,
   plot.scale=0.9,
-  font.family = "Helvetica"
+  font.family = NULL
   ) {
 
   type <- match.arg(type)
@@ -127,8 +127,8 @@ tab.title = "Risk Ratio (95% CrI)"
 
 ## plot
 plot <- ggplot(df,
-  aes(x=point_est, y = reorder(label, desc(label)))) +
-  geom_vline(xintercept = vline, linetype="dashed",size=0.5, alpha=0.5)+
+  aes(x=point_est, y = label)) +
+  geom_vline(xintercept = vline, linetype="dashed",linewidth=0.5, alpha=0.5)+
   geom_errorbarh(aes(xmin=low, xmax=up), height=.2) +
   geom_point(aes(x=mean),
     shape=23,size=point.size,
@@ -138,13 +138,13 @@ plot <- ggplot(df,
   xlab(x.lab) +
   xlim(x1,x2)+
   theme_tufte()+
-  theme(text = element_text(size=title.size, family = font.family),
-        plot.title = element_text(hjust = 0, size=title.size, family = font.family)) #20
+  theme(text = element_text(size=title.size), #family = font.family),
+        plot.title = element_text(hjust = 0, size=title.size)) #, family = font.family)) #20
 
 
-tab_base <- ggplot(df, aes(y = reorder(label, desc(label)))) +
+tab_base <- ggplot(df, aes(y = label)) +
   ylab(NULL) + xlab("  ") +
-  theme(plot.title = element_text(hjust = 0.5, size=title.size, family = font.family), ## centering title on text
+  theme(plot.title = element_text(hjust = 0.5, size=title.size), #family = font.family), ## centering title on text
         axis.text.x=element_text(color="white"), ## need text to be printed so it stays aligned with figure but white so it's invisible
         axis.line=element_blank(),
         axis.text.y=element_blank(),
@@ -156,12 +156,12 @@ tab_base <- ggplot(df, aes(y = reorder(label, desc(label)))) +
         panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
         plot.background=element_blank(),
-        text = element_text(size = 14,family = font.family))
+        text = element_text(size = 14)) #,family = font.family))
 
 tab <- tab_base +
   geom_text(aes(x=1,
     label=paste0(round(mean,digits), " (",round(low, digits),", ",round(up,digits),")")),
-    family=font.family, size=text.size) + #6
+    size=text.size) + #6
   ggtitle(tab.title) #"Mean Difference (95% CrI)"
 
 
@@ -239,7 +239,7 @@ plot_grid(plot, tab,
 
     ## treatment label
     labs <- bmt$treatment$description[!bmt$treatment$description %in% bmt$ref.treatment$description]
-    df$label <- reorder(labs, desc(labs))
+    df$label <- reorder(labs, order(labs))
     df$point_est <- 1:(nrow(bmt$treatment)-1)
 
     ## plot
@@ -253,8 +253,8 @@ plot_grid(plot, tab,
       xlab(x.lab) +
       xlim(x1,x2)+
       theme_tufte()+
-      theme(text = element_text(size = title.size,family = font.family),
-            plot.title = element_text(hjust = 0, size=title.size, family = font.family))+
+      theme(text = element_text(size = title.size),  #,family = font.family),
+            plot.title = element_text(hjust = 0, size=title.size))+
       geom_errorbarh(aes(xmin=low3, xmax=up3), height=.2, color="blue") +
       geom_errorbarh(aes(xmin=low2, xmax=up2), height=.2, color="red") +
       geom_point(aes(x=mean2),shape=25,size=point.size, fill="red",color="red", alpha=0.5)
@@ -262,7 +262,7 @@ plot_grid(plot, tab,
     ## table
     tab_base <- ggplot(df, aes(y=label)) +
       ylab(NULL) + xlab("  ") +
-      theme(plot.title = element_text(hjust = 0.5, size=title.size, family = font.family), ## centering title on text
+      theme(plot.title = element_text(hjust = 0.5, size=title.size), ## centering title on text
             axis.text.x=element_text(color="white"), ## need text to be printed so it stays aligned with figure but white so it's invisible
             axis.line=element_blank(),
             axis.text.y=element_blank(),axis.ticks=element_blank(),
@@ -273,21 +273,21 @@ plot_grid(plot, tab,
     tab <- tab_base +
       geom_text(aes(x=1,
                     label=paste0(round(mean,digits), " (",round(low, digits),",",round(up,digits),")")),
-                family=font.family,
+                # family=font.family,
                 size=text.size) +
       ggtitle(paste0(tab.title1, " (95% CrI)"))
 
     tab2 <- tab_base +
       geom_text(aes(x=1,
                     label=paste0(round(mean2,digits), " (",round(low2, digits),",",round(up2,digits),")")),
-                family=font.family,
+                # family=font.family,
                 size=text.size, color="red") +
       ggtitle(paste0(tab.title2, " (95% CI)"))
 
     tab3 <- tab_base +
       geom_text(aes(x=1,
                     label=paste0(" (",round(low3, digits),",",round(up3,digits),")")),
-                family=font.family, size=text.size, color="blue") +
+                 size=text.size, color="blue") +
       ggtitle("(95% PI)")
 
     #lay <-  matrix(c(1,1,1,2,3,4), nrow=1)

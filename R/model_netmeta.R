@@ -1,6 +1,6 @@
-#' @title Frequentist net-meta model for MD, HR, and RR
+#' @title Frequentist net-meta model
 #'
-#' This function is the warpper of netmeta and pairwise functions from netmeta package. \cr
+#' @description This function is the warpper of netmeta and pairwise functions from netmeta package. \cr
 #' R packgae netmeta is required.
 #'
 #' @return Summary list of the results
@@ -47,7 +47,7 @@ model_netmeta<- function(
   id.treatments,
   treatment,
   reference,
-  outcome=c("MD", "HR", "RR")){
+  outcome=c("MD", "OR", "HR", "RR")){
 
 if(outcome=="MD"){
 p <- pairwise(

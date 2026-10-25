@@ -59,12 +59,12 @@ funnel_plot <- function(
   text.x.position,
   cap,
   x1,                     ## x-aix left
-  x2,
-  font.family = "Helvetica"
+  x2
+  # font.family = "Helvetica"
   ){
 
   ## funnel plot data
-  netmeta.f <- funnel.netmeta(nmt,
+  netmeta.f <- funnel(nmt,
                       order = nmt$trts, legend = TRUE,
                       pos.legend = "bottomright", pos.tests = "topleft",
                       linreg = TRUE, rank = FALSE, mm = FALSE, digits.pval = 2)
@@ -116,10 +116,10 @@ p<-ggplot(data=netmeta.f)+
   labs(x=paste0(cap, " centered at comparison-specific effect"),
        y="Standard Error")+
   theme_tufte()+
-  theme(text = element_text(size = font.size,family = font.family))+
+  theme(text = element_text(size = font.size))+
   theme(legend.title=element_blank())+
   annotate("text", x = text.x.position, y = 0, label = paste0("P = ", round(bias$p.value,3), " (Egger's test)"),
-           family=font.family, size=text.size)
+           size=text.size)
 
 p
 }

@@ -2,10 +2,7 @@
 % Please edit documentation in R/model_netmeta.R
 \name{model_netmeta}
 \alias{model_netmeta}
-\title{Frequentist net-meta model for MD, HR, and RR
-
-This function is the warpper of netmeta and pairwise functions from netmeta package. \cr
-R packgae netmeta is required.}
+\title{Frequentist net-meta model}
 \usage{
 model_netmeta(
   long.data,
@@ -33,8 +30,6 @@ model_netmeta(
 Summary list of the results
 }
 \description{
-Frequentist net-meta model for MD, HR, and RR
-
 This function is the warpper of netmeta and pairwise functions from netmeta package. \cr
 R packgae netmeta is required.
 }

@@ -2,10 +2,7 @@
 % Please edit documentation in R/model_gemtc.R
 \name{model_gemtc}
 \alias{model_gemtc}
-\title{Bayesian net-meta model for MD, HR, and RR
-This function is the warpper of mtc.network, mtc.model, mtc.run,
-and relative.effect from gemtc package.
-R packgae gemtc and rjags are required.}
+\title{Bayesian net-meta model}
 \usage{
 model_gemtc(
   long.data,
@@ -40,7 +37,6 @@ details in mtc.run from gemtc package}
 Summary list of the results
 }
 \description{
-Bayesian net-meta model for MD, HR, and RR
 This function is the warpper of mtc.network, mtc.model, mtc.run,
 and relative.effect from gemtc package.
 R packgae gemtc and rjags are required.

@@ -49,7 +49,7 @@
 #' table.text.size=4,
 #' sucra.text.size=4,
 #' labels="Title",
-#' font.family = "Helvetica",
+#' font.family = NULL,
 #' plot.scale=0.9
 #' )
 #'
@@ -67,7 +67,7 @@ forest_SUCRA_plot <- function(
   table.text.size,
   sucra.text.size,
   labels=NULL,
-  font.family = "Helvetica",
+  font.family = NULL,
   plot.scale=0.9
   ){
 
@@ -108,8 +108,8 @@ forest_SUCRA_plot <- function(
 
   ## plot
   plot <- ggplot(df,
-                 aes(x=point_est, y = reorder(label, desc(label)))) +
-    geom_vline(xintercept = vline, linetype="dashed",size=0.5, alpha=0.5)+
+                 aes(x=point_est, y = label)) + #reorder(label, desc(label)))) +
+    geom_vline(xintercept = vline, linetype="dashed",linewidth=0.5, alpha=0.5)+
     geom_errorbarh(aes(xmin=low, xmax=up), height=.2, na.rm = TRUE) +
     geom_point(aes(x=mean),
                shape=point.shape,size=point.size,
@@ -119,19 +119,18 @@ forest_SUCRA_plot <- function(
     xlab(x.lab) +
     xlim(x1,x2)+
     theme_tufte()+
-    theme(text = element_text(size = title.size,family = font.family),
-          plot.title = element_text(hjust = 0, size=title.size, family = font.family)) #20
+    theme(text = element_text(size = title.size),  #family = font.family),
+          plot.title = element_text(hjust = 0, size=title.size)) #, family = font.family)) #20
 
 
-  tab_base <- ggplot(df, aes(y = reorder(label, desc(label)))) +
-    ylab(NULL) + xlab("  ")
+  tab_base <- ggplot(df, aes(y = label)) +　ylab(NULL) + xlab("  ")
 
   tab <- tab_base +
     geom_text(aes(x=1,
                   label=paste0(round(mean,digits), " (",round(low, digits),", ",round(up,digits),")")),
-              size = table.text.size,family = font.family)+
+              size = table.text.size)+#,　family = font.family)+
     ggtitle(tab.title)+
-    theme(plot.title = element_text(hjust = 0.5, size=title.size, family = font.family), ## centering title on text
+    theme(plot.title = element_text(hjust = 0.5, size=title.size), #family = font.family), ## centering title on text
           axis.text.x=element_text(color="white"), ## need text to be printed so it stays aligned with figure but white so it's invisible
           axis.line=element_blank(),
           axis.text.y=element_blank(),
@@ -157,7 +156,7 @@ forest_SUCRA_plot <- function(
       axis.ticks.x = element_blank(),
       axis.text.x  = element_blank(),
       axis.title.x = element_blank(),
-      plot.title = element_text(hjust = 0, size=title.size, family = font.family)
+      plot.title = element_text(hjust = 0, size=title.size)#, family = font.family)
     )+
     xlim(0,1)+
     geom_text_repel(
@@ -165,7 +164,7 @@ forest_SUCRA_plot <- function(
       direction    = "y",
       hjust        = 0,
       segment.size = 0.2,
-      family=font.family,
+      # family=font.family,
       size = sucra.text.size
     )
 
